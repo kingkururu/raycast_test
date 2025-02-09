@@ -185,7 +185,7 @@ void gamePlayScene::handleMovementKeys() {
     sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
     sf::Vector2f originalPlayerPos = player->getSpritePos();
 
-    std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << ", inex: " << tileIndexInMap << "can walk: "<< canWalkOnTile<< std::endl;
+    // std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << ", inex: " << tileIndexInMap << "can walk: "<< canWalkOnTile<< std::endl;
     
     if (FlagSystem::flagEvents.wPressed && canWalkOnTile){ // front 
         physics::spriteMover(player, physics::followDirVec); 
@@ -213,29 +213,23 @@ void gamePlayScene::handleMovementKeys() {
         player->changePosition(originalPlayerPos);
         player->updatePos(); 
     }
-   sf::Vector2f playerPos = player->getSpritePos();
-   float spriteWidth = playerBounds.width;
-   float spriteHeight = playerBounds.height;
+    sf::Vector2f playerPos = player->getSpritePos();
+    float spriteWidth = playerBounds.width;
+    float spriteHeight = playerBounds.height;
 
-   float newX = std::clamp(playerPos.x, spriteWidth, Constants::VIEW_SIZE_X - spriteWidth);
-   float newY = std::clamp(playerPos.y, spriteHeight, Constants::VIEW_SIZE_Y - spriteHeight);
+    float newX = std::clamp(playerPos.x, spriteWidth, Constants::VIEW_SIZE_X - spriteWidth);
+    float newY = std::clamp(playerPos.y, spriteHeight, Constants::VIEW_SIZE_Y - spriteHeight);
 
-   player->changePosition(sf::Vector2f{newX, newY});
-   player->updatePos(); 
+    player->changePosition(sf::Vector2f{newX, newY});
+    player->updatePos(); 
 }
 
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 
 void gamePlayScene::handleGameEvents() { 
     // scoreText->getText().setPosition(MetaComponents::view.getCenter().x - 460, MetaComponents::view.getCenter().y - 270);
     // scoreText->getText().setString("Score: " + std::to_string(score));
-    // int tileX = static_cast<int>((player->getSpritePos().x - Constants::TILEMAP_POSITION.x) / Constants::TILE_WIDTH);
-    // int tileY = static_cast<int>((player->getSpritePos().y - Constants::TILEMAP_POSITION.y) / Constants::TILE_HEIGHT);
-    
-    // std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << std::endl;
-    
 
     physics::drawRayCast3d(player, tileMap1, rays); 
-
 } 
 
 void gamePlayScene::handleSceneFlags(){
@@ -269,7 +263,7 @@ void gamePlayScene::changeAnimation(){ // change animation for sprites. change a
 }
 
 void gamePlayScene::updatePlayerAndView() {
-   
+   MetaComponents::view.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
 }
 
 void gamePlayScene::updateDrawablesVisibility(){
