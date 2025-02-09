@@ -174,23 +174,10 @@ void gamePlayScene::handleSpaceKey() {
 }
 
 void gamePlayScene::handleMovementKeys() {
-  
     if (!player->getMoveState()) return;
 
     sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
 
-    // // Left movement (Prevent moving out of the left boundary)
-    // if (FlagSystem::flagEvents.aPressed && playerBounds.left > 0) 
-    //     physics::spriteMover(player, physics::moveLeft);
-    
-    // // Right movement (Prevent moving out of the right boundary)
-    // if (FlagSystem::flagEvents.dPressed && playerBounds.left + playerBounds.width < Constants::WORLD_WIDTH) 
-    //     physics::spriteMover(player, physics::moveRight);
-    
-    // // Down movement (Prevent moving out of the bottom boundary)
-    // if (FlagSystem::flagEvents.sPressed && playerBounds.top + playerBounds.height < Constants::WORLD_HEIGHT) 
-    //     physics::spriteMover(player, physics::moveDown);
-    
     if (FlagSystem::flagEvents.wPressed){
         physics::spriteMover(player, physics::followDirVec); 
     }
@@ -207,6 +194,16 @@ void gamePlayScene::handleMovementKeys() {
     if (FlagSystem::flagEvents.sPressed){
         physics::spriteMover(player, physics::followDirVecOpposite); 
     }   
+
+    sf::Vector2f playerPos = player->getSpritePos();
+    float spriteWidth = playerBounds.width;
+    float spriteHeight = playerBounds.height;
+
+    float newX = std::clamp(playerPos.x, spriteWidth, Constants::VIEW_SIZE_X - spriteWidth);
+    float newY = std::clamp(playerPos.y, spriteHeight, Constants::VIEW_SIZE_Y - spriteHeight);
+
+    player->changePosition(sf::Vector2f{newX, newY});
+    player->updatePos(); 
 }
 
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 

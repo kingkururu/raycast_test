@@ -185,7 +185,9 @@ class Player : public NonStatic, public Animated {
                 const std::vector<std::weak_ptr<sf::Uint8[]>>& bitMask)
     : Sprite(position, scale, texture), 
       NonStatic(position, scale, texture, speed, acceleration), 
-      Animated(position, scale, texture, animationRects, indexMax, bitMask) {}
+      Animated(position, scale, texture, animationRects, indexMax, bitMask) {
+        setHeadingAngle(spriteCreated->getRotation());
+      }
 
     ~Player() override = default;
     void updatePlayer(sf::Vector2f newPos); 
