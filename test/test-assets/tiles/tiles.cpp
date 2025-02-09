@@ -121,3 +121,12 @@ void TileMap::addTile(unsigned int x, unsigned int y, std::unique_ptr<Tile> tile
         log_error(e.what()); // Log any exceptions that occur
     }
 }
+
+std::unique_ptr<Tile>& TileMap::getTile(size_t index) {
+    if (index < tiles.size()) {
+        return tiles[index]; // Return the tile at the specified index
+    } else {
+        // Handle the case where the index is out of bounds, throw an exception or return a nullptr
+        throw std::out_of_range("Index is out of range in getTile");
+    }
+}

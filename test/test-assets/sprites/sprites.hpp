@@ -187,19 +187,22 @@ class Player : public NonStatic, public Animated {
       NonStatic(position, scale, texture, speed, acceleration), 
       Animated(position, scale, texture, animationRects, indexMax, bitMask) {}
 
-   ~Player() override = default;
+    ~Player() override = default;
     void updatePlayer(sf::Vector2f newPos); 
     void changeAnimation() override; 
     bool getJumpingState() const { return isJumping; }
     bool getFallingState() const { return isFalling; }
     void setJumpingState(bool jumpState) { isJumping = jumpState; }  
-    void setFallingState(bool fallState) { isFalling = fallState; }  
+    void setFallingState(bool fallState) { isFalling = fallState; } 
+    void setHeadingAngle(float headingAngle);
+    float const getHeadingAngle(){ return headingAngle; }
  
  private:
     bool firstTurnInstance = true; 
     bool prevTurnBool{}; 
     bool isJumping = false;  
     bool isFalling = false; 
+    float headingAngle{}; 
 };
 
 // obstacle class deriving from NonStatic; refers to movable obstacles 

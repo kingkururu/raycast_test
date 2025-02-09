@@ -164,17 +164,14 @@ namespace Constants {
                         config["tiles"]["scale"]["y"].as<float>()};
             TILE_WIDTH = config["tiles"]["tile_width"].as<unsigned short>();
             TILE_HEIGHT = config["tiles"]["tile_height"].as<unsigned short>();
-            if (config["tiles"]["walkable"]) {
-                const YAML::Node& walkableNode = config["tiles"]["walkable"];                
-                for (unsigned short i = 0; i < TILES_NUM; ++i) {
-                    if (walkableNode[i].IsScalar()) {
-                        TILES_BOOLS[i] = walkableNode[i].as<bool>();
-                    } else {
-                        TILES_BOOLS[i] = false;  // Default to false if something goes wrong
-                    }
+            for (unsigned short i = 0; i < TILES_NUM; ++i) {
+                if (i != 6){
+                    TILES_BOOLS[i] = true;
+                } else {
+                    TILES_BOOLS[i] = false; 
                 }
             }
-
+            
             // Load tilemap settings
             TILEMAP_POSITION = {config["tilemap"]["position"]["x"].as<float>(),
                                 config["tilemap"]["position"]["y"].as<float>()};

@@ -129,10 +129,14 @@ namespace physics {
     }
 
     // object moving in a direction vector
-    sf::Vector2f follow( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration, const sf::Vector2f& direction){
+    sf::Vector2f followDirVec( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration, const sf::Vector2f& direction){
          sf::Vector2f movement(direction.x * speed * MetaComponents::deltaTime * acceleration.x, direction.y * speed * MetaComponents::deltaTime * acceleration.y);
         return originalPos + movement;
     }
+    sf::Vector2f followDirVecOpposite( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration, const sf::Vector2f& direction){
+        sf::Vector2f movement(direction.x * speed * MetaComponents::deltaTime * acceleration.x * -1, direction.y * speed * MetaComponents::deltaTime * acceleration.y * -1);
+       return originalPos + movement;
+   }
 
     // moving x or y positions based on directions
     sf::Vector2f moveLeft( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration){
@@ -211,7 +215,7 @@ namespace physics {
 
     // raycast collision 
     bool raycastPreCollision(const sf::Vector2f obj1position, const sf::Vector2f obj1direction, float obj1Speed, const sf::FloatRect obj1Bounds, sf::Vector2f obj1Acceleration, 
-                                const sf::Vector2f obj2position, const sf::Vector2f obj2direction, float obj2Speed, const sf::FloatRect obj2Bounds, sf::Vector2f obj2Acceleration) {
+                                const sf::Vector2f obj2position, const sf::Vector2f obj2direction, float obj2Speed, const sf::FloatRect obj2Bounds, sf::Vector2f obj2Acceleration) { // 2d collision pre check
             
         ++cachedRaycastResult.counter;
         std::cout << "calculating raycast collision time" << std::endl; 

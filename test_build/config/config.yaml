@@ -82,7 +82,7 @@ tilemap:
   height: 13 # number of grids in a column 
   boundary_offset: 0 
   filepath: "test/test-assets/tiles/tilemap.txt"
-  walkable: [false, true, true, false, false, true] #add more inside. if not meeting full size, the rest gets set to false 
+  # walkable: [false, true, true, false, false, true] #add more inside. if not meeting full size, the rest gets set to false 
 
 # Text settings
 text:

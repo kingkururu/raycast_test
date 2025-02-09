@@ -318,6 +318,13 @@ void Player::changeAnimation() {
     }
 }
 
+void Player::setHeadingAngle(float headingAngle){
+    this->headingAngle = headingAngle;
+    float angleRad = headingAngle * (3.14f / 180.f);
+    directionVector.x = std::cos(angleRad);
+    directionVector.y = std::sin(angleRad);
+}
+
 // calculates obstacle's direction vector when bullet is made 
 void Obstacle::setDirectionVector(float angle) {
     float angleRad = angle * (3.14f / 180.f);

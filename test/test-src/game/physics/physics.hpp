@@ -70,7 +70,8 @@ namespace physics{
 
     // falling objects
     sf::Vector2f freeFall(float speed, sf::Vector2f originalPo);
-    sf::Vector2f follow( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration, const sf::Vector2f& direction); 
+    sf::Vector2f followDirVec( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration, const sf::Vector2f& direction); 
+    sf::Vector2f followDirVecOpposite( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration, const sf::Vector2f& direction); 
 
     // moving player
     sf::Vector2f moveLeft( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration = {1.0f, 1.0f}); 
@@ -188,11 +189,74 @@ namespace physics{
             auto& tileMap = getTileMap(obj2);
 
             if constexpr (std::is_same_v<std::decay_t<decltype(tileMap)>, TileMap>) {
-                sf::Vector2f position2 = tileMap.getTileMapPosition();
-                sf::Vector2f size2( tileMap.getTileWidth() * static_cast<float>(tileMap.getTileMapWidth()),
-                                    tileMap.getTileHeight() * static_cast<float>(tileMap.getTileMapHeight()) );
-                return boundingBoxCollision(data1.position, data1.size, position2, size2);
+                // Use the provided constants for tile properties
+                float tileW = static_cast<float>(Constants::TILE_WIDTH);
+                float tileH = static_cast<float>(Constants::TILE_HEIGHT);
+                sf::Vector2f mapPos = Constants::TILEMAP_POSITION; // Use the predefined TILEMAP_POSITION
+            
+                // Calculate the 4 possible tiles the player can stand on based on the player's position and size
+                int startX = static_cast<int>((data1.position.x - mapPos.x) / tileW);
+                int startY = static_cast<int>((data1.position.y - mapPos.y) / tileH);
+                int endX = static_cast<int>(((data1.position.x + data1.size.x) - mapPos.x) / tileW);
+                int endY = static_cast<int>(((data1.position.y + data1.size.y) - mapPos.y) / tileH);
+            
+                // Debugging: print the calculated tile indices
+                std::cout << "startX: " << startX << ", startY: " << startY
+                          << ", endX: " << endX << ", endY: " << endY << std::endl;
+            
+                // Clamp indices to stay within valid tile range
+                startX = std::clamp(startX, 0, static_cast<int>(Constants::TILEMAP_HEIGHT ));
+                startY = std::clamp(startY, 0, static_cast<int>(Constants::TILEMAP_WIDTH ));
+                endX = std::clamp(endX, 0, static_cast<int>(Constants::TILEMAP_HEIGHT ));
+                endY = std::clamp(endY, 0, static_cast<int>(Constants::TILEMAP_WIDTH ));
+            
+                // Debugging: print the clamped tile indices
+                std::cout << "Clamped startX: " << startX << ", startY: " << startY
+                          << ", endX: " << endX << ", endY: " << endY << std::endl;
+            
+                // Check the 4 possible tiles the player can stand on
+                int tilesChecked = 0;
+                for (int y = startY; y <= endY && tilesChecked < 4; ++y) {
+                    for (int x = startX; x <= endX && tilesChecked < 4; ++x) {
+                        sf::Vector2f tilePos(mapPos.x + x * tileW, mapPos.y + y * tileH);
+                        sf::Vector2f tileSize(tileW, tileH);
+            
+                        // Debugging: print tile position and size
+                        std::cout << "Checking tile at (" << tilePos.x << ", " << tilePos.y
+                                  << ") with size (" << tileSize.x << ", " << tileSize.y << ")" << std::endl;
+            
+                        // Check if the tile is walkable before collision check
+                        int tileIndex = y * Constants::TILES_COLUMNS + x;
+            
+                        // Access the tile using getTile
+                        auto& tile = tileMap.getTile(tileIndex); 
+            
+                        // Debugging: print tile index and walkable status
+                        std::cout << "tileIndex: " << tileIndex << ", walkable: "
+                                  << tile->getWalkable() << std::endl;
+            
+                        if (!tile->getWalkable()) {
+                            // Debugging: print when skipping a tile
+                            std::cout << "Skipping non-walkable tile at (" << x << ", " << y << ")" << std::endl;
+                            continue; // Skip non-walkable tiles
+                        }
+            
+                        // Perform bounding box collision check
+                        if (boundingBoxCollision(data1.position, data1.size, tilePos, tileSize)) {
+                            std::cout << "Collision detected with tile at (" << x << ", " << y << ")" << std::endl;
+                            return true; // Collision detected
+                        }
+            
+                        // Increment tiles checked
+                        ++tilesChecked;
+                    }
+                }
+            
+                // If no collision is found after checking 4 tiles, return false
+                return false;
             }
+            
+            
         }
         return false; // Default case
     }

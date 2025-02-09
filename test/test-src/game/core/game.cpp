@@ -62,11 +62,11 @@ void GameManager::handleEventInput() {
             mainWindow.getWindow().close();
             return; 
         }
-        if (event.type == sf::Event::Resized){ 
-            float aspectRatio = static_cast<float>(event.size.width) / event.size.height;
-            sf::FloatRect visibleArea(0.0f, 0.0f, Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_X / aspectRatio);
-            MetaComponents::view = sf::View(visibleArea); 
-        }
+        // if (event.type == sf::Event::Resized){ 
+        //     float aspectRatio = static_cast<float>(event.size.width) / event.size.height;
+        //     sf::FloatRect visibleArea(0.0f, 0.0f, Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_X / aspectRatio);
+        //     MetaComponents::view = sf::View(visibleArea); 
+        // }
         if (event.type == sf::Event::KeyPressed) {
             switch (event.key.code) {
                 case sf::Keyboard::A:

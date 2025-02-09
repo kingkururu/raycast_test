@@ -97,6 +97,9 @@ void gamePlayScene::createAssets() {
         for (int i = 0; i < Constants::TILES_NUMBER; ++i) {
             tiles1.at(i) = std::make_shared<Tile>(Constants::TILES_SCALE, Constants::TILES_TEXTURE, Constants::TILES_SINGLE_RECTS[i], Constants::TILES_BITMASKS[i], Constants::TILES_BOOLS[i]); 
         }
+        for (auto tile : Constants::TILES_BOOLS){
+            std::cout << tile << "\n"; 
+        }
         tileMap1 = std::make_unique<TileMap>(tiles1.data(), Constants::TILES_NUMBER, Constants::TILEMAP_WIDTH, Constants::TILEMAP_HEIGHT, Constants::TILE_WIDTH, Constants::TILE_HEIGHT, Constants::TILEMAP_FILEPATH, Constants::TILEMAP_POSITION); 
 
         // // Music
@@ -171,46 +174,51 @@ void gamePlayScene::handleSpaceKey() {
 }
 
 void gamePlayScene::handleMovementKeys() {
-    // if(!player->getMoveState()) return; 
+  
+    if (!player->getMoveState()) return;
 
-    // // Left movement
-    // if (FlagSystem::flagEvents.aPressed ) physics::spriteMover(player, physics::moveLeft);
-    // // Right movement
-    // if (FlagSystem::flagEvents.dPressed) physics::spriteMover(player, physics::moveRight);
-    // // Down movement
-    // if (FlagSystem::flagEvents.sPressed) physics::spriteMover(player, physics::moveDown);
-    // // Up movement
-    // if (FlagSystem::flagEvents.wPressed) physics::spriteMover(player, physics::moveUp);
-        if (!player->getMoveState()) return;
-    
-        sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
-    
-        // Left movement (Prevent moving out of the left boundary)
-        if (FlagSystem::flagEvents.aPressed && playerBounds.left > 0) 
-            physics::spriteMover(player, physics::moveLeft);
-        
-        // Right movement (Prevent moving out of the right boundary)
-        if (FlagSystem::flagEvents.dPressed && playerBounds.left + playerBounds.width < Constants::WORLD_WIDTH) 
-            physics::spriteMover(player, physics::moveRight);
-        
-        // Down movement (Prevent moving out of the bottom boundary)
-        if (FlagSystem::flagEvents.sPressed && playerBounds.top + playerBounds.height < Constants::WORLD_HEIGHT) 
-            physics::spriteMover(player, physics::moveDown);
-        
-        // Up movement (Prevent moving out of the top boundary)
-        if (FlagSystem::flagEvents.wPressed && playerBounds.top > 0) 
-            physics::spriteMover(player, physics::moveUp);
-        
-            std::cout << player->getSpritePos().x << ", " << player->getSpritePos().y << "\n"; 
-            std::cout << Constants::WORLD_WIDTH << "\n"; 
-            std::cout << Constants::WORLD_HEIGHT << "\n"; 
+    sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
 
+    // // Left movement (Prevent moving out of the left boundary)
+    // if (FlagSystem::flagEvents.aPressed && playerBounds.left > 0) 
+    //     physics::spriteMover(player, physics::moveLeft);
+    
+    // // Right movement (Prevent moving out of the right boundary)
+    // if (FlagSystem::flagEvents.dPressed && playerBounds.left + playerBounds.width < Constants::WORLD_WIDTH) 
+    //     physics::spriteMover(player, physics::moveRight);
+    
+    // // Down movement (Prevent moving out of the bottom boundary)
+    // if (FlagSystem::flagEvents.sPressed && playerBounds.top + playerBounds.height < Constants::WORLD_HEIGHT) 
+    //     physics::spriteMover(player, physics::moveDown);
+    
+    if (FlagSystem::flagEvents.wPressed){
+        physics::spriteMover(player, physics::followDirVec); 
+    }
+    if (FlagSystem::flagEvents.aPressed){
+        player->returnSpritesShape().rotate(-1.0f); // degrees
+        float newAngle = player->returnSpritesShape().getRotation();
+        player->setHeadingAngle(newAngle);
+    }
+    if (FlagSystem::flagEvents.dPressed){
+        player->returnSpritesShape().rotate(1.0f); // degrees
+        float newAngle = player->returnSpritesShape().getRotation();
+        player->setHeadingAngle(newAngle);
+    }
+    if (FlagSystem::flagEvents.sPressed){
+        physics::spriteMover(player, physics::followDirVecOpposite); 
+    }   
 }
 
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 
 void gamePlayScene::handleGameEvents() { 
     // scoreText->getText().setPosition(MetaComponents::view.getCenter().x - 460, MetaComponents::view.getCenter().y - 270);
     // scoreText->getText().setString("Score: " + std::to_string(score));
+
+    if(physics::collisionHelper(player, tileMap1)){
+        std::cout << "colliding \n";
+    } else {
+        std::cout << "not colliding\n";
+    }
 
 } 
 
@@ -245,29 +253,7 @@ void gamePlayScene::changeAnimation(){ // change animation for sprites. change a
 }
 
 void gamePlayScene::updatePlayerAndView() {
-    // if(FlagSystem::gameScene1Flags.playerJumping) return;
-    // // Get the player's position
-    // sf::Vector2f playerPos = player->getSpritePos();
-
-    // // Calculate the view size and game world boundaries
-    // sf::Vector2f viewSize = MetaComponents::view.getSize();
-    // sf::FloatRect worldBounds(0, 0, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT);
-
-    // // Offset at the bottom of the background to consider any gaps or padding
-    // const float bottomOffset = 330.0;
-
-    // // Default view center is the player's position
-    // sf::Vector2f viewCenter = playerPos;
-
-    // // Lock the view within the top and bottom boundaries
-    // float minViewY = viewSize.y / 2.0f;
-    // float maxViewY = std::max(worldBounds.height - viewSize.y / 2.0f - bottomOffset, minViewY);
-
-    // // Clamp the view center's Y-coordinate within valid bounds
-    // viewCenter.y = std::clamp(viewCenter.y, minViewY, maxViewY);
-
-    // // Update the view center
-    // MetaComponents::view.setCenter(viewCenter);
+   
 }
 
 void gamePlayScene::updateDrawablesVisibility(){
