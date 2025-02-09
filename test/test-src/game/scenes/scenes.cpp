@@ -171,26 +171,40 @@ void gamePlayScene::handleSpaceKey() {
 }
 
 void gamePlayScene::handleMovementKeys() {
-    if(!player->getMoveState()) return; 
+    // if(!player->getMoveState()) return; 
 
-    //sf::FloatRect background1Bounds = background->getViewBounds(background->returnSpritesShape());
-    // Left movement
-    if (FlagSystem::flagEvents.aPressed ) physics::spriteMover(player, physics::moveLeft);
-    // Right movement
-    if (FlagSystem::flagEvents.dPressed) physics::spriteMover(player, physics::moveRight);
-    // Down movement
-    if (FlagSystem::flagEvents.sPressed) physics::spriteMover(player, physics::moveDown);
-    // Up movement
-    if (FlagSystem::flagEvents.wPressed) physics::spriteMover(player, physics::moveUp);
+    // // Left movement
+    // if (FlagSystem::flagEvents.aPressed ) physics::spriteMover(player, physics::moveLeft);
+    // // Right movement
+    // if (FlagSystem::flagEvents.dPressed) physics::spriteMover(player, physics::moveRight);
+    // // Down movement
+    // if (FlagSystem::flagEvents.sPressed) physics::spriteMover(player, physics::moveDown);
+    // // Up movement
+    // if (FlagSystem::flagEvents.wPressed) physics::spriteMover(player, physics::moveUp);
+        if (!player->getMoveState()) return;
     
-    // if(player->getSpritePos().y > background1Bounds.height + background->getSpritePos().y){
-    //     player->setMoveState(false);
-    //     std::cout << "player fell off screen" << std::endl;
-    // } 
-    // else if(player->getSpritePos().y < background->getSpritePos().y){
-    //     player->changePosition({player->getSpritePos().x, background->getSpritePos().y});
-    //     player->updatePos();
-    // }
+        sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
+    
+        // Left movement (Prevent moving out of the left boundary)
+        if (FlagSystem::flagEvents.aPressed && playerBounds.left > 0) 
+            physics::spriteMover(player, physics::moveLeft);
+        
+        // Right movement (Prevent moving out of the right boundary)
+        if (FlagSystem::flagEvents.dPressed && playerBounds.left + playerBounds.width < Constants::WORLD_WIDTH) 
+            physics::spriteMover(player, physics::moveRight);
+        
+        // Down movement (Prevent moving out of the bottom boundary)
+        if (FlagSystem::flagEvents.sPressed && playerBounds.top + playerBounds.height < Constants::WORLD_HEIGHT) 
+            physics::spriteMover(player, physics::moveDown);
+        
+        // Up movement (Prevent moving out of the top boundary)
+        if (FlagSystem::flagEvents.wPressed && playerBounds.top > 0) 
+            physics::spriteMover(player, physics::moveUp);
+        
+            std::cout << player->getSpritePos().x << ", " << player->getSpritePos().y << "\n"; 
+            std::cout << Constants::WORLD_WIDTH << "\n"; 
+            std::cout << Constants::WORLD_HEIGHT << "\n"; 
+
 }
 
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 
@@ -298,8 +312,7 @@ void gamePlayScene::draw() {
 
 void gamePlayScene2::createAssets() {
  try {
-        // Initialize sprites and music here 
-        background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE2);
+       
     } 
 
     catch (const std::exception& e) {
@@ -315,8 +328,6 @@ void gamePlayScene2::draw() {
     try {
         window.clear(); // clear elements from previous screen 
 
-        if (background && background->getVisibleState()) window.draw(*background); 
-    
         window.display(); 
     } 
     

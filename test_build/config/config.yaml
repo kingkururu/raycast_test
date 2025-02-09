@@ -1,13 +1,13 @@
 # Game display settings
 world:
-  scale: 0.5
-  width: 2880    # 5760 * scale
-  height: 1620   # 3240 * scale
+  scale: 1.0
+  width: 600    # 5760 * scale
+  height: 400   # 3240 * scale
   frame_limit: 60 # fps
-  title: "SFML game template tester"
+  title: "raycast sfml game template tester"
   view:
-    size_x: 960.0 # pixels. also the screen size 
-    size_y: 540.0 # pixels. also the screen size  
+    size_x: 600.0 # pixels. also the screen size 
+    size_y: 400.0 # pixels. also the screen size  
     initial_center:
       x: 0.0 # pixels, absoloute from window
       y: 0.0 # pixels, absoloute from window
@@ -55,56 +55,12 @@ sprites:
     animation_rows: 2 # number of rows for animation 
     path: "test/test-assets/sprites/png/player.png"
     position:
-      x: 550.0 # pixels 
-      y: 380.0 # pixels 
-    scale:
-      x: 1.0
-      y: 1.0
-  button1:
-    index_max: 6 # number of animation frame
-    path: "test/test-assets/sprites/png/Static.png"
-    position:
       x: 0.0 # pixels 
       y: 0.0 # pixels 
     scale:
       x: 1.0
       y: 1.0
-  cloudBlue:
-    path: "test/test-assets/sprites/png/cloud1.png"
-    position:
-      x: 500.0 # pixels 
-      y: 300.0 # pixels
-    scale:
-      x: 1.0
-      y: 1.0
-    speed: 10.0 
-    acceleration:
-      x: 2.0 
-      y: 2.0
-    respawn_time: 4.0 # seconds
-    limit: 3 # number of clouds
-  cloudPurple:
-    path: "test/test-assets/sprites/png/cloud2.png"
-    position:
-      x: 700.0 # pixels 
-      y: 300.0 # pixels
-    respawn_time: 3.0 # seconds
-    limit: 4 # number of clouds
-  coin:
-    path: "test/test-assets/sprites/png/coin.png"
-    position:
-      x: 100.0 # pixels 
-      y: 100.0 # pixels
-    scale:
-      x: 1.0
-      y: 1.0
-    speed: 10.0 
-    acceleration:
-      x: 2.0 
-      y: 2.0
-    respawn_time: 8.0 # seconds
-    limit: 5 # number of coins
-    
+  
 # Tile settings
 tiles:
   path: "test/test-assets/tiles/png/Tileset.png"
@@ -121,9 +77,9 @@ tiles:
 tilemap:
   position: 
     x: 0.0 # pixels
-    y: 600.0 # pixels
-  width: 140 # number of grids in a row 
-  height: 2 # number of grids in a column 
+    y: 0.0 # pixels
+  width: 19 # number of grids in a row 
+  height: 13 # number of grids in a column 
   boundary_offset: 0 
   filepath: "test/test-assets/tiles/tilemap.txt"
   walkable: [false, true, true, false, false, true] #add more inside. if not meeting full size, the rest gets set to false 

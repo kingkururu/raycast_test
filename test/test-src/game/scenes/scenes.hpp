@@ -139,6 +139,6 @@ public:
   void draw() override; 
   void update() override; 
 
-  std::unique_ptr<Background> background; 
+  //std::unique_ptr<Background> background; 
 };
 

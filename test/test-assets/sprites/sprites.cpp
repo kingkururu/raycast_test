@@ -13,7 +13,7 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Text
         if (auto tex = texture.lock()) {  
             sf::Vector2u textureSize = tex->getSize(); 
             if (!textureSize.x || !textureSize.y) {
-                throw std::runtime_error("Loaded texture has size 0");
+                throw std::runtime_error("Loaded sprite has size 0");
             }
 
             spriteCreated->setTexture(*tex); 

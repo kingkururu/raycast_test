@@ -10,7 +10,7 @@ Tile::Tile(sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, sf::IntRect t
         if (auto sharedTexture = texture.lock()) {
             sf::Vector2u textureSize = sharedTexture->getSize(); 
             if (textureSize.x == 0 || textureSize.y == 0) {
-                throw std::runtime_error("Loaded texture has size 0");
+                throw std::runtime_error("Loaded tile texture has size 0");
             }
 
             tileSprite->setTexture(*sharedTexture); // Set the texture

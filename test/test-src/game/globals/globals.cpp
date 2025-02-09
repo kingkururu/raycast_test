@@ -141,16 +141,6 @@ namespace Constants {
             SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = config["sprite"]["out_of_bounds_adjustment"].as<unsigned short>();
             PLAYER_Y_POS_BOUNDS_RUN = config["sprite"]["player_y_pos_bounds_run"].as<unsigned short>();
 
-            // Load background settings
-            BACKGROUND_SPEED = config["background"]["speed"].as<float>();
-            BACKGROUNDSPRITE_PATH = config["background"]["textures"]["day_path"].as<std::string>();
-            BACKGROUNDSPRITE_PATH2 = config["background"]["textures"]["night_path"].as<std::string>();
-            BACKGROUND_POSITION = {config["background"]["position"]["x"].as<float>(),
-                                config["background"]["position"]["y"].as<float>()};
-            BACKGROUND_SCALE = {config["background"]["scale"]["x"].as<float>(),
-                                config["background"]["scale"]["y"].as<float>()};
-            BACKGROUND_MOVING_DIRECTION = SpriteComponents::toDirection(config["background"]["moving_direction"].as<std::string>());
-
             // Load sprite paths and settings
             SPRITE1_PATH = config["sprites"]["sprite1"]["path"].as<std::string>();
             SPRITE1_SPEED = config["sprites"]["sprite1"]["speed"].as<float>();
@@ -164,45 +154,6 @@ namespace Constants {
                                 config["sprites"]["sprite1"]["position"]["y"].as<float>()};
             SPRITE1_SCALE = {config["sprites"]["sprite1"]["scale"]["x"].as<float>(),
                             config["sprites"]["sprite1"]["scale"]["y"].as<float>()};
-
-            // Cloud (blue) settings
-            CLOUDBLUE_PATH = config["sprites"]["cloudBlue"]["path"].as<std::string>();
-            CLOUDBLUE_POSITION = {config["sprites"]["cloudBlue"]["position"]["x"].as<float>(),
-                                config["sprites"]["cloudBlue"]["position"]["y"].as<float>()};
-            CLOUDBLUE_SCALE = {config["sprites"]["cloudBlue"]["scale"]["x"].as<float>(),
-                            config["sprites"]["cloudBlue"]["scale"]["y"].as<float>()};
-            CLOUDBLUE_SPEED = config["sprites"]["cloudBlue"]["speed"].as<float>();
-            CLOUDBLUE_ACCELERATION= {config["sprites"]["cloudBlue"]["acceleration"]["x"].as<float>(),
-                                config["sprites"]["cloudBlue"]["acceleration"]["y"].as<float>()};
-            CLOUDBLUE_INITIAL_RESPAWN_TIME = config["sprites"]["cloudBlue"]["respawn_time"].as<float>();
-            CLOUDBLUE_LIMIT = config["sprites"]["cloudBlue"]["limit"].as<unsigned short>();
-
-            // Cloud (purple) settings
-            CLOUDPURPLE_PATH = config["sprites"]["cloudPurple"]["path"].as<std::string>();
-            CLOUDPURPLE_POSITION = {config["sprites"]["cloudPurple"]["position"]["x"].as<float>(),
-                                config["sprites"]["cloudPurple"]["position"]["y"].as<float>()};
-            CLOUDPURPLE_LIMIT = config["sprites"]["cloudPurple"]["limit"].as<unsigned short>();
-
-            // Coin settings
-            COIN_PATH = config["sprites"]["coin"]["path"].as<std::string>();
-            COIN_POSITION = {config["sprites"]["coin"]["position"]["x"].as<float>(),
-                            config["sprites"]["coin"]["position"]["y"].as<float>()};
-            COIN_SCALE = {config["sprites"]["coin"]["scale"]["x"].as<float>(),
-                        config["sprites"]["coin"]["scale"]["y"].as<float>()};
-            COIN_SPEED = config["sprites"]["coin"]["speed"].as<float>();
-            COIN_ACCELERATION = {config["sprites"]["coin"]["acceleration"]["x"].as<float>(),
-                                config["sprites"]["coin"]["acceleration"]["y"].as<float>()};
-            COIN_INITIAL_RESPAWN_TIME = config["sprites"]["coin"]["respawn_time"].as<float>();
-            COIN_LIMIT = config["sprites"]["coin"]["limit"].as<unsigned short>();
-
-            // Load button settings
-            BUTTON1_INDEXMAX = config["sprites"]["button1"]["index_max"].as<short>();
-            BUTTON1_PATH = config["sprites"]["button1"]["path"].as<std::string>();
-            BUTTON1_POSITION = {config["sprites"]["button1"]["position"]["x"].as<float>(),
-                                config["sprites"]["button1"]["position"]["y"].as<float>()};
-            BUTTON1_SCALE = {config["sprites"]["button1"]["scale"]["x"].as<float>(),
-                            config["sprites"]["button1"]["scale"]["y"].as<float>()};
-            CLOUDPURPLE_INITIAL_RESPAWN_TIME = config["sprites"]["cloudPurple"]["respawn_time"].as<float>();
 
             // Load tile settings
             TILES_PATH = config["tiles"]["path"].as<std::string>();
@@ -281,15 +232,9 @@ namespace Constants {
 
     void loadAssets(){  // load all sprites textures and stuff across scenes 
         // sprites
-        if (!BACKGROUND_TEXTURE->loadFromFile(BACKGROUNDSPRITE_PATH)) log_warning("Failed to load background texture");
-        if (!BACKGROUND_TEXTURE2->loadFromFile(BACKGROUNDSPRITE_PATH2)) log_warning("Failed to load background2 texture");
-        if (!BUTTON1_TEXTURE->loadFromFile(BUTTON1_PATH)) log_warning("Failed to load button texture");
         if (!SPRITE1_TEXTURE->loadFromFile(SPRITE1_PATH)) log_warning("Failed to load sprite1 texture");
         if (!TILES_TEXTURE->loadFromFile(TILES_PATH)) log_warning("Failed to load tiles texture");
-        if (!CLOUDBLUE_TEXTURE->loadFromFile(CLOUDBLUE_PATH)) log_warning("Failed to load blue cloud texture");
-        if (!CLOUDPURPLE_TEXTURE->loadFromFile(CLOUDPURPLE_PATH)) log_warning("Failed to load purple cloud texture");
-        if (!COIN_TEXTURE->loadFromFile(COIN_PATH)) log_warning("Failed to load coin texture");
-        
+     
         // music
         if (!BACKGROUNDMUSIC_MUSIC->openFromFile(BACKGROUNDMUSIC_PATH)) log_warning("Failed to load background music");
 
@@ -310,25 +255,6 @@ namespace Constants {
                 SPRITE1_ANIMATIONRECTS.emplace_back(sf::IntRect{col * 32, row * 32, 32, 32});
             }
         }
-
-        BUTTON1_ANIMATIONRECTS.reserve(BUTTON1_INDEXMAX); 
-        // make rects for animations     
-        for(int i = 0; i < BUTTON1_INDEXMAX; ++i ){
-            BUTTON1_ANIMATIONRECTS.emplace_back(sf::IntRect{ 170 * i, 0, 170, 170 }); 
-        }
-
-        BUTTON1_BITMASK.reserve(BUTTON1_INDEXMAX); 
-        // make bitmasks
-        for (const auto& rect : BUTTON1_ANIMATIONRECTS ) {
-            BUTTON1_BITMASK.emplace_back(createBitmask(BUTTON1_TEXTURE, rect));
-        }
-        
-        CLOUDBLUE_RECT = sf::IntRect{ 0, 0, 205, 116 }; 
-        CLOUDBLUE_BITMASK = createBitmask(CLOUDBLUE_TEXTURE, CLOUDBLUE_RECT);
-        CLOUDPURPLE_RECT = sf::IntRect{ 0, 0, 205, 116 }; 
-        CLOUDPURPLE_BITMASK = createBitmask(CLOUDPURPLE_TEXTURE, CLOUDPURPLE_RECT);
-        COIN_RECT = sf::IntRect{ 0, 0, 20, 20 };
-        COIN_BITMASK = createBitmask(COIN_TEXTURE, COIN_RECT);
 
         TILES_SINGLE_RECTS.reserve(TILES_NUMBER); 
         // Populate individual tile rectangles

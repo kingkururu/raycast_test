@@ -1,20 +1,18 @@
-[2025-02-09 10:55:26.777] [info_logger] [info] Succesfuly read yaml file
-[2025-02-09 10:55:26.839] [info_logger] [info] 	Constants initialized 
-[2025-02-09 10:55:26.896] [info_logger] [info] scene made
-[2025-02-09 10:55:26.896] [info_logger] [info] scene made
-[2025-02-09 10:55:26.896] [info_logger] [info] scene made
-[2025-02-09 10:55:26.896] [info_logger] [info] 	Game initialized
-[2025-02-09 10:55:26.897] [info_logger] [info] Sprite initialized successfully
-[2025-02-09 10:55:26.897] [info_logger] [info] Tile map initialized successfully
-[2025-02-09 10:55:26.897] [info_logger] [info] initializing assets in scene 1: 0.181000ms
-[2025-02-09 10:55:26.897] [info_logger] [info] Sprite initialized successfully
-[2025-02-09 10:55:26.897] [info_logger] [info] Background created
-[2025-02-09 10:55:34.161] [info_logger] [info] Window close event detected.
-[2025-02-09 10:55:34.207] [info_logger] [info] 	Game Ended
+[2025-02-09 11:46:12.111] [info_logger] [info] Succesfuly read yaml file
+[2025-02-09 11:46:12.138] [info_logger] [info] 	Constants initialized 
+[2025-02-09 11:46:12.173] [info_logger] [info] scene made
+[2025-02-09 11:46:12.173] [info_logger] [info] scene made
+[2025-02-09 11:46:12.173] [info_logger] [info] scene made
+[2025-02-09 11:46:12.173] [info_logger] [info] 	Game initialized
+[2025-02-09 11:46:12.174] [info_logger] [info] Sprite initialized successfully
+[2025-02-09 11:46:12.174] [info_logger] [info] Tile map initialized successfully
+[2025-02-09 11:46:12.174] [info_logger] [info] initializing assets in scene 1: 0.163000ms
+[2025-02-09 11:46:20.451] [info_logger] [info] Window close event detected.
+[2025-02-09 11:46:20.461] [info_logger] [info] 	Game Ended
 
-[2025-02-09 10:55:34.207] [info_logger] [info] objects cleared.
-[2025-02-09 10:55:34.207] [info_logger] [info] Quadtree cleared.
-[2025-02-09 10:55:34.207] [info_logger] [info] objects cleared.
-[2025-02-09 10:55:34.207] [info_logger] [info] Quadtree cleared.
-[2025-02-09 10:55:34.207] [info_logger] [info] objects cleared.
-[2025-02-09 10:55:34.207] [info_logger] [info] Quadtree cleared.
+[2025-02-09 11:46:20.461] [info_logger] [info] objects cleared.
+[2025-02-09 11:46:20.461] [info_logger] [info] Quadtree cleared.
+[2025-02-09 11:46:20.461] [info_logger] [info] objects cleared.
+[2025-02-09 11:46:20.461] [info_logger] [info] Quadtree cleared.
+[2025-02-09 11:46:20.461] [info_logger] [info] objects cleared.
+[2025-02-09 11:46:20.461] [info_logger] [info] Quadtree cleared.

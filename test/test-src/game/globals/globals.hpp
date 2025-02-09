@@ -107,48 +107,6 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline std::vector<sf::IntRect> SPRITE1_ANIMATIONRECTS;
     inline std::vector<std::shared_ptr<sf::Uint8[]>> SPRITE1_BITMASK;
 
-    // Cloud (blue) settings
-    inline std::filesystem::path CLOUDBLUE_PATH;
-    inline sf::Vector2f CLOUDBLUE_POSITION;
-    inline sf::Vector2f CLOUDBLUE_SCALE;
-    inline float CLOUDBLUE_SPEED;
-    inline sf::Vector2f CLOUDBLUE_ACCELERATION;
-    inline std::shared_ptr<sf::Texture> CLOUDBLUE_TEXTURE = std::make_shared<sf::Texture>();
-    inline std::shared_ptr<sf::Uint8[]> CLOUDBLUE_BITMASK;
-    inline sf::IntRect CLOUDBLUE_RECT;
-    inline float CLOUDBLUE_INITIAL_RESPAWN_TIME;
-    inline unsigned short CLOUDBLUE_LIMIT;
-
-    // Cloud (purple) settings
-    inline std::filesystem::path CLOUDPURPLE_PATH;
-    inline sf::Vector2f CLOUDPURPLE_POSITION;
-    inline std::shared_ptr<sf::Texture> CLOUDPURPLE_TEXTURE = std::make_shared<sf::Texture>();
-    inline std::shared_ptr<sf::Uint8[]> CLOUDPURPLE_BITMASK;
-    inline sf::IntRect CLOUDPURPLE_RECT;
-    inline float CLOUDPURPLE_INITIAL_RESPAWN_TIME;
-    inline unsigned short CLOUDPURPLE_LIMIT;
-
-    // COin settings
-    inline std::filesystem::path COIN_PATH;
-    inline sf::Vector2f COIN_POSITION;
-    inline sf::Vector2f COIN_SCALE;
-    inline float COIN_SPEED;
-    inline sf::Vector2f COIN_ACCELERATION;
-    inline std::shared_ptr<sf::Texture> COIN_TEXTURE = std::make_shared<sf::Texture>();
-    inline std::shared_ptr<sf::Uint8[]> COIN_BITMASK;
-    inline sf::IntRect COIN_RECT;
-    inline float COIN_INITIAL_RESPAWN_TIME;
-    inline unsigned short COIN_LIMIT;
-
-    // Button settings
-    inline short BUTTON1_INDEXMAX;
-    inline std::filesystem::path BUTTON1_PATH;
-    inline sf::Vector2f BUTTON1_POSITION;
-    inline sf::Vector2f BUTTON1_SCALE;
-    inline std::shared_ptr<sf::Texture> BUTTON1_TEXTURE = std::make_shared<sf::Texture>();
-    inline std::vector<sf::IntRect> BUTTON1_ANIMATIONRECTS;
-    inline std::vector<std::shared_ptr<sf::Uint8[]>> BUTTON1_BITMASK;
-
     // Tile settings
     inline sf::Vector2f TILEMAP_POSITION; 
     inline std::filesystem::path TILES_PATH;
