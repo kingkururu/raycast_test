@@ -178,7 +178,14 @@ void gamePlayScene::handleMovementKeys() {
     if (!player->getMoveState()) return;
 
     sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
+    int tileX = static_cast<int>((player->getSpritePos().x - Constants::TILEMAP_POSITION.x) / Constants::TILE_WIDTH);
+    int tileY = static_cast<int>((player->getSpritePos().y - Constants::TILEMAP_POSITION.y) / Constants::TILE_HEIGHT);
+    int tileIndexInMap = tileY * Constants::TILEMAP_WIDTH + tileX;
+    
+    bool canWalkOnTile = tileMap1->getTile(tileIndexInMap)->getWalkable(); 
 
+    std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << ", inex: " << tileIndexInMap << "can walk: "<< canWalkOnTile<< std::endl;
+    
     if (FlagSystem::flagEvents.wPressed){
         physics::spriteMover(player, physics::followDirVec); 
     }
@@ -211,12 +218,11 @@ void gamePlayScene::handleMovementKeys() {
 void gamePlayScene::handleGameEvents() { 
     // scoreText->getText().setPosition(MetaComponents::view.getCenter().x - 460, MetaComponents::view.getCenter().y - 270);
     // scoreText->getText().setString("Score: " + std::to_string(score));
-
-    if(physics::collisionHelper(player, tileMap1)){
-        std::cout << "colliding \n";
-    } else {
-        std::cout << "not colliding\n";
-    }
+    // int tileX = static_cast<int>((player->getSpritePos().x - Constants::TILEMAP_POSITION.x) / Constants::TILE_WIDTH);
+    // int tileY = static_cast<int>((player->getSpritePos().y - Constants::TILEMAP_POSITION.y) / Constants::TILE_HEIGHT);
+    
+    // std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << std::endl;
+    
 
     physics::drawRayCast3d(player, tileMap1, rays); 
 

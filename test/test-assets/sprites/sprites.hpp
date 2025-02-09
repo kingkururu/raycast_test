@@ -41,6 +41,7 @@ public:
     virtual float getSpeed() const { return 0.0f; }
     virtual sf::Vector2f getAcceleration() const { return sf::Vector2f(); }
     bool getMoveState() const { return false; }
+    bool isCentered() const { return false; }
 
     // draws sprite using window.draw(*sprite)
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override { if (visibleState && spriteCreated) target.draw(*spriteCreated, states); }
@@ -199,7 +200,8 @@ class Player : public NonStatic, public Animated {
     void setJumpingState(bool jumpState) { isJumping = jumpState; }  
     void setFallingState(bool fallState) { isFalling = fallState; } 
     void setHeadingAngle(float headingAngle);
-    float const getHeadingAngle(){ return headingAngle; }
+    float getHeadingAngle() const { return headingAngle; }
+    bool isCentered() const { return true; }
  
  private:
     bool firstTurnInstance = true; 

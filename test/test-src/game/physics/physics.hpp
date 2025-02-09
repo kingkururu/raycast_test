@@ -142,7 +142,11 @@ namespace physics{
     CollisionData extractCollisionData(Sprite&& sprite) {
         CollisionData data;
         data.bounds = sprite->returnSpritesShape().getGlobalBounds();
-        data.position = sprite->getSpritePos();
+        if(!sprite->isCentered()) {
+            data.position = sprite->getSpritePos();
+        } else {
+            data.position = sf::Vector2f{ sprite->getSpritePos().x - data.bounds.width / 2, sprite->getSpritePos().y - data.bounds.height / 2};
+        }
         data.radius = sprite->getRadius();
         data.direction = sprite->getDirectionVector();
         data.speed = sprite->getSpeed();
