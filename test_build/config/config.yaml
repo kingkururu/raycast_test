@@ -1,13 +1,13 @@
 # Game display settings
 world:
   scale: 1.0
-  width: 600    # 5760 * scale
-  height: 400   # 3240 * scale
+  width: 608    
+  height: 416  
   frame_limit: 60 # fps
   title: "raycast sfml game template tester"
   view:
-    size_x: 600.0 # pixels. also the screen size 
-    size_y: 400.0 # pixels. also the screen size  
+    size_x: 608.0 # pixels. also the screen size 
+    size_y: 416.0 # pixels. also the screen size  
     initial_center:
       x: 0.0 # pixels, absoloute from window
       y: 0.0 # pixels, absoloute from window

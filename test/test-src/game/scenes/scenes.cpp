@@ -101,6 +101,9 @@ void gamePlayScene::createAssets() {
             std::cout << tile << "\n"; 
         }
         tileMap1 = std::make_unique<TileMap>(tiles1.data(), Constants::TILES_NUMBER, Constants::TILEMAP_WIDTH, Constants::TILEMAP_HEIGHT, Constants::TILE_WIDTH, Constants::TILE_HEIGHT, Constants::TILEMAP_FILEPATH, Constants::TILEMAP_POSITION); 
+        rays = sf::VertexArray(sf::Lines, 2);
+        // rays[0].position = sf::Vector2f(100.f, 100.f);
+        // rays[0].color = sf::Color::Red;
 
         // // Music
         // backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
@@ -217,6 +220,8 @@ void gamePlayScene::handleGameEvents() {
         std::cout << "not colliding\n";
     }
 
+    physics::drawRayCast3d(player, tileMap1, rays); 
+
 } 
 
 void gamePlayScene::handleSceneFlags(){
@@ -275,6 +280,11 @@ void gamePlayScene::draw() {
       
         drawAnythingVisible(player);
 
+
+
+
+        window.draw(rays); 
+
         // drawAnythingVisible(introText);
         // drawAnythingVisible(scoreText);
         // drawAnythingVisible(endingText);
@@ -310,7 +320,7 @@ void gamePlayScene2::handleInput() {
 void gamePlayScene2::draw() {
     try {
         window.clear(); // clear elements from previous screen 
-
+        
         window.display(); 
     } 
     

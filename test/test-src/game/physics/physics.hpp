@@ -81,6 +81,8 @@ namespace physics{
     sf::Vector2f jump(float& elapsedTime, float speed, sf::Vector2f originalPos, sf::Vector2f acceleration = {0.1f, 0.1f}); 
     sf::Vector2f jumpToSurface(float& elapsedTime, float speed, sf::Vector2f originalPos, sf::Vector2f acceleration = {0.1f, 0.1f}); 
 
+    void drawRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& rays);
+
     template<typename SpriteType, typename MoveFunc>
     void spriteMover(std::unique_ptr<SpriteType>& sprite, const MoveFunc& moveFunc) {
         float speed = sprite->getSpeed(); 
@@ -205,10 +207,10 @@ namespace physics{
                           << ", endX: " << endX << ", endY: " << endY << std::endl;
             
                 // Clamp indices to stay within valid tile range
-                startX = std::clamp(startX, 0, static_cast<int>(Constants::TILEMAP_HEIGHT ));
-                startY = std::clamp(startY, 0, static_cast<int>(Constants::TILEMAP_WIDTH ));
-                endX = std::clamp(endX, 0, static_cast<int>(Constants::TILEMAP_HEIGHT ));
-                endY = std::clamp(endY, 0, static_cast<int>(Constants::TILEMAP_WIDTH ));
+                startX = std::clamp(startX, 0, static_cast<int>(Constants::TILEMAP_HEIGHT -1));
+                startY = std::clamp(startY, 0, static_cast<int>(Constants::TILEMAP_WIDTH -1));
+                endX = std::clamp(endX, 0, static_cast<int>(Constants::TILEMAP_HEIGHT -1));
+                endY = std::clamp(endY, 0, static_cast<int>(Constants::TILEMAP_WIDTH -1));
             
                 // Debugging: print the clamped tile indices
                 std::cout << "Clamped startX: " << startX << ", startY: " << startY

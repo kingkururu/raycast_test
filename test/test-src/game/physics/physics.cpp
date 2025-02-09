@@ -197,6 +197,13 @@ namespace physics {
         return originalPos;
     }
 
+    void drawRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& rays){
+
+        rays[0].position = sf::Vector2f(100.f, 100.f);
+        rays[0].color = sf::Color::Red;
+
+    }
+
 // collisions 
     // circle collision 
     bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {
