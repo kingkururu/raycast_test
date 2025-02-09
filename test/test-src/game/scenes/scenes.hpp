@@ -106,30 +106,21 @@ class gamePlayScene : public virtual Scene{
 
   void draw() override; 
 
-  std::unique_ptr<Background> background; 
   std::unique_ptr<Player> player; 
-  std::vector<std::unique_ptr<Cloud>> cloudBlue;
-  std::vector<std::unique_ptr<Cloud>> cloudPurple; 
-  std::vector<std::unique_ptr<Coin>> coins;
-  std::unique_ptr<Button> button1;  
 
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   
   std::unique_ptr<TileMap> tileMap1; 
 
-  std::unique_ptr<MusicClass> backgroundMusic;
+  // std::unique_ptr<MusicClass> backgroundMusic;
 
-  std::unique_ptr<SoundClass> playerJumpSound; 
-  std::unique_ptr<SoundClass> coinHitSound; 
-  std::unique_ptr<SoundClass> playerDeadSound;
-  std::unique_ptr<SoundClass> buttonClickSound; 
+  // std::unique_ptr<SoundClass> playerJumpSound; 
+  // std::unique_ptr<SoundClass> coinHitSound; 
+  // std::unique_ptr<SoundClass> playerDeadSound;
+  // std::unique_ptr<SoundClass> buttonClickSound; 
 
-  std::unique_ptr<TextClass> introText; 
-  std::unique_ptr<TextClass> scoreText; 
-  std::unique_ptr<TextClass> endingText; 
-
-  float cloudBlueRespawnTime {};
-  float cloudPurpleRespawnTime {};
-  float coinRespawnTime {};
+  // std::unique_ptr<TextClass> introText; 
+  // std::unique_ptr<TextClass> scoreText; 
+  // std::unique_ptr<TextClass> endingText; 
 
   size_t score {};
 };
