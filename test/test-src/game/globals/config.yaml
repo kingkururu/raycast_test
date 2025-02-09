@@ -11,6 +11,7 @@ world:
     initial_center:
       x: 0.0 # pixels, absoloute from window
       y: 0.0 # pixels, absoloute from window
+  FOV: 10 # degrees
 
 # Game score settings
 score:

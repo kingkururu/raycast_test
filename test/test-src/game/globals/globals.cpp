@@ -128,6 +128,7 @@ namespace Constants {
             VIEW_INITIAL_CENTER = {config["world"]["view"]["initial_center"]["x"].as<float>(),
                                 config["world"]["view"]["initial_center"]["y"].as<float>()};
             VIEW_RECT = { 0.0f, 0.0f, VIEW_SIZE_X, VIEW_SIZE_Y };
+            FOV = config["world"]["FOV"].as<unsigned short>(); 
 
             // Load score settings
             INITIAL_SCORE = config["score"]["initial"].as<unsigned short>(); 
@@ -166,9 +167,9 @@ namespace Constants {
             TILE_HEIGHT = config["tiles"]["tile_height"].as<unsigned short>();
             for (unsigned short i = 0; i < TILES_NUM; ++i) {
                 if (i != 6){
-                    TILES_BOOLS[i] = true;
+                    TILES_BOOLS[i] = false;
                 } else {
-                    TILES_BOOLS[i] = false; 
+                    TILES_BOOLS[i] = true; 
                 }
             }
             

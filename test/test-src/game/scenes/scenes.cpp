@@ -101,9 +101,7 @@ void gamePlayScene::createAssets() {
             std::cout << tile << "\n"; 
         }
         tileMap1 = std::make_unique<TileMap>(tiles1.data(), Constants::TILES_NUMBER, Constants::TILEMAP_WIDTH, Constants::TILEMAP_HEIGHT, Constants::TILE_WIDTH, Constants::TILE_HEIGHT, Constants::TILEMAP_FILEPATH, Constants::TILEMAP_POSITION); 
-        rays = sf::VertexArray(sf::Lines, 2);
-        // rays[0].position = sf::Vector2f(100.f, 100.f);
-        // rays[0].color = sf::Color::Red;
+        rays = sf::VertexArray(sf::Lines, Constants::FOV * 2);
 
         // // Music
         // backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
