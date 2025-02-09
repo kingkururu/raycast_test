@@ -61,8 +61,8 @@ public:
     unsigned int const getTileTypesNumber() const { return tileTypesNumber; }
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool newVisibleState) { visibleState = newVisibleState; }
-   std::unique_ptr<Tile>& getTile(size_t index);
-   
+    std::unique_ptr<Tile>& getTile(size_t index);
+
 private:
     unsigned int tileTypesNumber {};
     size_t tileMapWidth{};

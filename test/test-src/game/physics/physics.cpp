@@ -198,11 +198,14 @@ namespace physics {
     }
 
     void drawRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines){
-        float startX = player->getSpritePos().x + player->getRects().width / 2;
-        float startY = player->getSpritePos().y + player->getRects().height / 2;
+        float startX = player->getSpritePos().x;
+        float startY = player->getSpritePos().y;
+        // float startX = player->getSpritePos().x + player->getRects().width / 2;
+        // float startY = player->getSpritePos().y + player->getRects().height / 2;
         float playerAngle = player->getHeadingAngle();  // Player's rotation angle (direction of the ray)
 
         for(int i = 0; i < Constants::FOV; ++i){
+            // float angle = playerAngle + (i - Constants::FOV / 2) * 0.1f; 
             float angle = playerAngle + (i - Constants::FOV / 2); 
             float radian = angle * 3.14159f / 180.0f;  // Convert angle to radians
             float dirX = cos(radian);  // X direction of the ray
@@ -378,4 +381,58 @@ namespace physics {
         //std::cout << "Pixel perfect collision passed." << std::endl;
         return false; 
     }
+    bool pixelPerfectCollision(const std::shared_ptr<sf::Uint8[]>& bitmask1, const sf::Vector2f& position1, const sf::Vector2f& size1,
+        const std::shared_ptr<sf::Uint8[]>& bitmask2, const sf::Vector2f& position2, const sf::Vector2f& size2,
+        float angle1, float angle2) {
+
+        // Helper function to get the pixel index in the bitmask
+        auto getPixelIndex = [](const sf::Vector2f& size, int x, int y) -> int {
+            return (y * static_cast<int>(size.x) + x) * 4; // Each pixel has 4 bytes (RGBA)
+        };
+
+        // Calculate the overlapping area between the two objects
+        float left = std::max(position1.x, position2.x);
+        float top = std::max(position1.y, position2.y);
+        float right = std::min(position1.x + size1.x, position2.x + size2.x);
+        float bottom = std::min(position1.y + size1.y, position2.y + size2.y);
+
+        // Check AABB collision first
+        if (left >= right || top >= bottom) return false;
+
+        // Helper function to rotate a point (x, y) around the center of the sprite
+        auto rotatePoint = [](float x, float y, float angle) -> sf::Vector2f {
+            float rad = angle * 3.14159f / 180.0f;
+            float cosAngle = std::cos(rad);
+            float sinAngle = std::sin(rad);
+            return sf::Vector2f(x * cosAngle - y * sinAngle, x * sinAngle + y * cosAngle);
+        };
+
+        // Check each pixel in the overlapping area
+        for (int y = static_cast<int>(top); y < static_cast<int>(bottom); ++y) {
+            for (int x = static_cast<int>(left); x < static_cast<int>(right); ++x) {
+
+                // Transform the pixel position to local coordinates of each sprite
+                int x1 = x - static_cast<int>(position1.x);
+                int y1 = y - static_cast<int>(position1.y);
+                int x2 = x - static_cast<int>(position2.x);
+                int y2 = y - static_cast<int>(position2.y);
+
+                // Apply rotation by reversing the rotation angle for each sprite
+                auto rotated1 = rotatePoint(x1, y1, -angle1);
+                auto rotated2 = rotatePoint(x2, y2, -angle2);
+
+                // Get the index of the pixel in each bitmask
+                int index1 = getPixelIndex(size1, static_cast<int>(rotated1.x), static_cast<int>(rotated1.y));
+                int index2 = getPixelIndex(size2, static_cast<int>(rotated2.x), static_cast<int>(rotated2.y));
+
+                // Check if the pixels' values are non-zero (i.e., not transparent)
+                if (bitmask1[index1] == 1 && bitmask2[index2] == 1) {
+                    return true; // Collision detected
+                }
+            }
+        }
+
+        return false;
+        }
+
 }

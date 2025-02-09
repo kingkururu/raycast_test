@@ -187,6 +187,8 @@ class Player : public NonStatic, public Animated {
       NonStatic(position, scale, texture, speed, acceleration), 
       Animated(position, scale, texture, animationRects, indexMax, bitMask) {
         setHeadingAngle(spriteCreated->getRotation());
+        sf::Vector2f playerCenter = sf::Vector2f( getRects().width / 2, getRects().height / 2);
+        spriteCreated->setOrigin(playerCenter);  // Adjust the origin for the player sprite
       }
 
     ~Player() override = default;
