@@ -263,7 +263,7 @@ void gamePlayScene::changeAnimation(){ // change animation for sprites. change a
 }
 
 void gamePlayScene::updatePlayerAndView() {
-   MetaComponents::view.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
+
 }
 
 void gamePlayScene::updateDrawablesVisibility(){
@@ -278,7 +278,31 @@ void gamePlayScene::updateDrawablesVisibility(){
 // Draws only the visible sprite and texts
 void gamePlayScene::draw() {
     try {
-        window.clear(sf::Color::Blue); // set the base baskground color blue
+        window.clear(sf::Color::Black); // set the base baskground color blue
+
+        // Small top down view 
+        MetaComponents::view.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
+
+        // Main view
+        sf::View mainView(sf::FloatRect(0, 0, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
+        mainView.setViewport(sf::FloatRect(0.0f, 0.f, 1.0f, 1.0f)); 
+
+        // Shapes for demonstration
+        sf::RectangleShape mainRect(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
+        mainRect.setFillColor(sf::Color::Blue);
+        mainRect.setPosition(0,0);
+
+        sf::RectangleShape rect(sf::Vector2f(50,50));
+        rect.setFillColor(sf::Color::Green);
+        rect.setPosition(0,0);
+
+
+        // Draw using the main view
+        window.setView(mainView);
+        window.draw(mainRect);
+
+        window.setView(MetaComponents::view);
+        window.draw(rect);
 
         auto drawAnythingVisible = [&](auto& drawable) {
             if (drawable && drawable->getVisibleState()) window.draw(*drawable);
@@ -288,14 +312,7 @@ void gamePlayScene::draw() {
       
         drawAnythingVisible(player);
 
-
-
-
         window.draw(rays); 
-
-        // drawAnythingVisible(introText);
-        // drawAnythingVisible(scoreText);
-        // drawAnythingVisible(endingText);
 
         window.display(); 
     } 
