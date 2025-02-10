@@ -8,7 +8,7 @@
 
 // Scene constructure sets up window and sprite respawn times 
 Scene::Scene( sf::RenderWindow& gameWindow ) : window(gameWindow), quadtree(0.0f, 0.0f, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT){ 
-    MetaComponents::view = sf::View(Constants::VIEW_RECT); 
+    MetaComponents::smallView = sf::View(Constants::VIEW_RECT); 
     log_info("scene made"); 
 }
 
@@ -37,16 +37,16 @@ void Scene::draw(){
 void Scene::moveViewPortWASD(){
     // move view port 
     if(FlagSystem::flagEvents.aPressed){
-        MetaComponents::view.move(sf::Vector2f(-10, 0)); 
+        MetaComponents::smallView.move(sf::Vector2f(-10, 0)); 
     }
     if(FlagSystem::flagEvents.dPressed){
-        MetaComponents::view.move(sf::Vector2f(10, 0)); 
+        MetaComponents::smallView.move(sf::Vector2f(10, 0)); 
     }
     if(FlagSystem::flagEvents.sPressed){
-        MetaComponents::view.move(sf::Vector2f(0, 10)); 
+        MetaComponents::smallView.move(sf::Vector2f(0, 10)); 
     }
     if(FlagSystem::flagEvents.wPressed){
-        MetaComponents::view.move(sf::Vector2f(0, -10)); 
+        MetaComponents::smallView.move(sf::Vector2f(0, -10)); 
     }
 }
 
@@ -226,7 +226,7 @@ void gamePlayScene::handleMovementKeys() {
 
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 
 void gamePlayScene::handleGameEvents() { 
-    // scoreText->getText().setPosition(MetaComponents::view.getCenter().x - 460, MetaComponents::view.getCenter().y - 270);
+    // scoreText->getText().setPosition(MetaComponents::smallView.getCenter().x - 460, MetaComponents::smallView.getCenter().y - 270);
     // scoreText->getText().setString("Score: " + std::to_string(score));
 
     physics::drawRayCast3d(player, tileMap1, rays); 
@@ -247,7 +247,7 @@ void gamePlayScene::update() {
         quadtree.update(); 
 
         // Set the view for the window
-        window.setView(MetaComponents::view);
+        window.setView(MetaComponents::smallView);
         
     } catch (const std::exception& e) {
         log_error("Exception in updateSprites: " + std::string(e.what()));
@@ -280,10 +280,7 @@ void gamePlayScene::draw() {
     try {
         window.clear(sf::Color::Black); // set the base baskground color blue
 
-        // Small top down view 
-        MetaComponents::view.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
-
-        // Main view
+        ////////////// Big view 
         sf::View mainView(sf::FloatRect(0, 0, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
         mainView.setViewport(sf::FloatRect(0.0f, 0.f, 1.0f, 1.0f)); 
 
@@ -296,13 +293,14 @@ void gamePlayScene::draw() {
         rect.setFillColor(sf::Color::Green);
         rect.setPosition(0,0);
 
-
-        // Draw using the main view
         window.setView(mainView);
         window.draw(mainRect);
-
-        window.setView(MetaComponents::view);
         window.draw(rect);
+
+        ////////////// Small view 
+        MetaComponents::smallView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
+
+        window.setView(MetaComponents::smallView);
 
         auto drawAnythingVisible = [&](auto& drawable) {
             if (drawable && drawable->getVisibleState()) window.draw(*drawable);
@@ -358,7 +356,7 @@ void gamePlayScene2::update() {
     try {
         handleInvisibleSprites(); // do a sprite pooling or actually delete all
 
-        window.setView(MetaComponents::view); 
+        window.setView(MetaComponents::smallView); 
         
     }
     catch (const std::exception& e) {

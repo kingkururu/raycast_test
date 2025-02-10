@@ -96,7 +96,7 @@ void GameManager::handleEventInput() {
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             FlagSystem::flagEvents.mouseClicked = true;
-            sf::Vector2f worldPos = mainWindow.getWindow().mapPixelToCoords(sf::Mouse::getPosition(mainWindow.getWindow()), MetaComponents::view);
+            sf::Vector2f worldPos = mainWindow.getWindow().mapPixelToCoords(sf::Mouse::getPosition(mainWindow.getWindow()), MetaComponents::smallView);
             MetaComponents::mouseClickedPosition_i = static_cast<sf::Vector2i>(worldPos);
             MetaComponents::mouseClickedPosition_f = worldPos; 
         }

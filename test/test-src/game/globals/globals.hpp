@@ -33,7 +33,7 @@ namespace MetaComponents{
     inline float spacePressedElapsedTime{};
 
     extern sf::Clock clock;
-    extern sf::View view;
+    extern sf::View smallView;
 
     extern sf::FloatRect getViewBounds();
     extern float getViewMinX();
