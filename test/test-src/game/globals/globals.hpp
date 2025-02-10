@@ -34,12 +34,13 @@ namespace MetaComponents{
 
     extern sf::Clock clock;
     extern sf::View smallView;
+    extern sf::View bigView;
 
-    extern sf::FloatRect getViewBounds();
-    extern float getViewMinX();
-    extern float getViewMaxX();
-    extern float getViewMinY();
-    extern float getViewMaxY();
+    extern sf::FloatRect getSmallViewBounds();
+    extern float getSmallViewMinX();
+    extern float getSmallViewMaxX();
+    extern float getSmallViewMinY();
+    extern float getSmallViewMaxY();
 }
 
 namespace Constants { // not actually "constants" in terms of being fixed, but should never be altered after being read from the config.yaml file

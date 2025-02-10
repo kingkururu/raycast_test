@@ -9,6 +9,11 @@
 // Scene constructure sets up window and sprite respawn times 
 Scene::Scene( sf::RenderWindow& gameWindow ) : window(gameWindow), quadtree(0.0f, 0.0f, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT){ 
     MetaComponents::smallView = sf::View(Constants::VIEW_RECT); 
+    MetaComponents::smallView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
+
+    MetaComponents::bigView = sf::View(sf::FloatRect(0, 0, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT)); 
+    MetaComponents::bigView.setViewport(sf::FloatRect(0.0f, 0.f, 1.0f, 1.0f)); 
+
     log_info("scene made"); 
 }
 
@@ -281,10 +286,6 @@ void gamePlayScene::draw() {
         window.clear(sf::Color::Black); // set the base baskground color blue
 
         ////////////// Big view 
-        sf::View mainView(sf::FloatRect(0, 0, Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
-        mainView.setViewport(sf::FloatRect(0.0f, 0.f, 1.0f, 1.0f)); 
-
-        // Shapes for demonstration
         sf::RectangleShape mainRect(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
         mainRect.setFillColor(sf::Color::Blue);
         mainRect.setPosition(0,0);
@@ -293,13 +294,11 @@ void gamePlayScene::draw() {
         rect.setFillColor(sf::Color::Green);
         rect.setPosition(0,0);
 
-        window.setView(mainView);
+        window.setView(MetaComponents::bigView);
         window.draw(mainRect);
         window.draw(rect);
 
         ////////////// Small view 
-        MetaComponents::smallView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
-
         window.setView(MetaComponents::smallView);
 
         auto drawAnythingVisible = [&](auto& drawable) {

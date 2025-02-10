@@ -8,6 +8,7 @@
 namespace MetaComponents {
     sf::Clock clock;
     sf::View smallView; 
+    sf::View bigView; 
 
     sf::FloatRect getSmallViewBounds(){
         return {
