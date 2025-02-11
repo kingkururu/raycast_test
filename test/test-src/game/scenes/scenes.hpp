@@ -105,6 +105,13 @@ class gamePlayScene : public virtual Scene{
   void changeAnimation();
 
   void draw() override; 
+  void drawInBigView();
+  void drawInSmallView();
+
+  template<typename drawableType>
+  void drawVisibleObject(drawableType& drawable){
+    if (drawable && drawable->getVisibleState()) window.draw(*drawable);
+  }
 
   std::unique_ptr<Player> player; 
 

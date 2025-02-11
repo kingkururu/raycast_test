@@ -285,31 +285,8 @@ void gamePlayScene::draw() {
     try {
         window.clear(sf::Color::Black); // set the base baskground color blue
 
-        ////////////// Big view 
-        sf::RectangleShape mainRect(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
-        mainRect.setFillColor(sf::Color::Blue);
-        mainRect.setPosition(0,0);
-
-        sf::RectangleShape rect(sf::Vector2f(50,50));
-        rect.setFillColor(sf::Color::Green);
-        rect.setPosition(0,0);
-
-        window.setView(MetaComponents::bigView);
-        window.draw(mainRect);
-        window.draw(rect);
-
-        ////////////// Small view 
-        window.setView(MetaComponents::smallView);
-
-        auto drawAnythingVisible = [&](auto& drawable) {
-            if (drawable && drawable->getVisibleState()) window.draw(*drawable);
-        };
-    
-        drawAnythingVisible(tileMap1);
-      
-        drawAnythingVisible(player);
-
-        window.draw(rays); 
+        drawInBigView();
+        drawInSmallView();
 
         window.display(); 
     } 
@@ -317,6 +294,31 @@ void gamePlayScene::draw() {
     catch (const std::exception& e) {
         log_error("Exception in draw: " + std::string(e.what()));
     }
+}
+
+void gamePlayScene::drawInBigView(){
+    window.setView(MetaComponents::bigView);
+
+    sf::RectangleShape mainRect(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT));
+    mainRect.setFillColor(sf::Color::Blue);
+    mainRect.setPosition(0,0);
+
+    sf::RectangleShape rect(sf::Vector2f(50,50));
+    rect.setFillColor(sf::Color::Green);
+    rect.setPosition(0,0);
+
+    window.draw(mainRect);
+    window.draw(rect);
+    drawVisibleObject(player);  
+}
+
+void gamePlayScene::drawInSmallView(){
+    window.setView(MetaComponents::smallView);
+
+    drawVisibleObject(tileMap1);
+    drawVisibleObject(player);
+
+    window.draw(rays); 
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
