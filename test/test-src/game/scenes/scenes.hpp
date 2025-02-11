@@ -113,6 +113,8 @@ class gamePlayScene : public virtual Scene{
     if (drawable && drawable->getVisibleState()) window.draw(*drawable);
   }
 
+  void drawRays3D();
+
   std::unique_ptr<Player> player; 
 
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   

@@ -197,7 +197,7 @@ namespace physics {
         return originalPos;
     }
 
-    void drawRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines){
+    void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines){
         float startX = player->getSpritePos().x;
         float startY = player->getSpritePos().y;
         // float startX = player->getSpritePos().x + player->getRects().width / 2;
