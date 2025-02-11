@@ -62,11 +62,15 @@ void GameManager::handleEventInput() {
             mainWindow.getWindow().close();
             return; 
         }
-        // if (event.type == sf::Event::Resized){ 
-        //     float aspectRatio = static_cast<float>(event.size.width) / event.size.height;
-        //     sf::FloatRect visibleArea(0.0f, 0.0f, Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_X / aspectRatio);
-        //     MetaComponents::view = sf::View(visibleArea); 
-        // }
+        if (event.type == sf::Event::Resized){ 
+            float aspectRatio = static_cast<float>(event.size.width) / event.size.height;
+            sf::FloatRect visibleArea(0.0f, 0.0f, Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_X / aspectRatio);
+            // MetaComponents::smallView = sf::View(visibleArea); 
+            // //keeping this makes the small view in proportion but be cut out sometimes if resized
+            // MetaComponents::smallView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
+
+            MetaComponents::bigView = sf::View(visibleArea); 
+        }
         if (event.type == sf::Event::KeyPressed) {
             switch (event.key.code) {
                 case sf::Keyboard::A:
@@ -96,9 +100,15 @@ void GameManager::handleEventInput() {
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             FlagSystem::flagEvents.mouseClicked = true;
-            sf::Vector2f worldPos = mainWindow.getWindow().mapPixelToCoords(sf::Mouse::getPosition(mainWindow.getWindow()), MetaComponents::smallView);
-            MetaComponents::mouseClickedPosition_i = static_cast<sf::Vector2i>(worldPos);
-            MetaComponents::mouseClickedPosition_f = worldPos; 
+            sf::Vector2f worldPos = mainWindow.getWindow().mapPixelToCoords(sf::Mouse::getPosition(mainWindow.getWindow()), MetaComponents::bigView);
+            MetaComponents::bigViewmouseClickedPosition_i = static_cast<sf::Vector2i>(worldPos);
+            MetaComponents::bigViewmouseClickedPosition_f = worldPos; 
+            std::cout << "big view x: " <<  MetaComponents::bigViewmouseClickedPosition_i.x << " and big view y: " <<  MetaComponents::bigViewmouseClickedPosition_i.y <<std::endl;
+
+            worldPos = mainWindow.getWindow().mapPixelToCoords(sf::Mouse::getPosition(mainWindow.getWindow()), MetaComponents::smallView);
+            MetaComponents::smallViewmouseClickedPosition_i = static_cast<sf::Vector2i>(worldPos);
+            MetaComponents::smallViewmouseClickedPosition_f = worldPos; 
+            std::cout << "small view x: " <<  MetaComponents::smallViewmouseClickedPosition_i.x << " and small view y: " <<  MetaComponents::smallViewmouseClickedPosition_i.y <<std::endl;
         }
     }
 }
