@@ -57,7 +57,8 @@ namespace SpriteComponents {
             {"WHITE", sf::Color::White},
             {"BLACK", sf::Color::Black},
             {"TRANSPARENT", sf::Color::Transparent},
-            {"CUSTOMCOLOR_LIGHTCORAL", sf::Color(240, 128, 128)} // add colors like this 
+            {"CUSTOMCOLOR_LIGHTCORAL", sf::Color(240, 128, 128)}, // add colors like this 
+            {"CUSTOMCOLOR_BROWN", sf::Color(112, 39, 24)}
         };
 
         auto it = colorMap.find(color);
@@ -131,6 +132,7 @@ namespace Constants {
             VIEW_RECT = { 0.0f, 0.0f, VIEW_SIZE_X, VIEW_SIZE_Y };
             FOV = config["world"]["FOV"].as<unsigned short>(); 
             RAYS_NUM = config["world"]["rays_num"].as<size_t>(); 
+            GROUND_COLOR = SpriteComponents::toSfColor(config["world"]["ground_color"].as<std::string>());
 
             // Load score settings
             INITIAL_SCORE = config["score"]["initial"].as<unsigned short>(); 

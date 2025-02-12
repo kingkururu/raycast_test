@@ -285,7 +285,7 @@ void gamePlayScene::updateDrawablesVisibility(){
 // Draws only the visible sprite and texts
 void gamePlayScene::draw() {
     try {
-        window.clear(sf::Color::White); // set the base baskground color white
+        window.clear(sf::Color::Black); // set the base baskground color black
 
         drawInBigView();
         drawInSmallView();
@@ -301,6 +301,18 @@ void gamePlayScene::draw() {
 void gamePlayScene::drawInBigView(){
     window.setView(MetaComponents::bigView);
 
+    // temporary 
+    sf::RectangleShape sky(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
+    sky.setFillColor(sf::Color::Blue); // background for small view
+    sky.setPosition(0,0);
+
+    sf::RectangleShape ground(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
+    ground.setFillColor(Constants::GROUND_COLOR); // background for small view
+    ground.setPosition(0, Constants::WORLD_HEIGHT / 2);
+
+    window.draw(sky);
+    window.draw(ground); 
+
     window.draw(wallLine);
 }
 
@@ -309,7 +321,7 @@ void gamePlayScene::drawInSmallView(){
 
     // temporary 
     sf::RectangleShape mainRect(sf::Vector2f(Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_Y));
-    mainRect.setFillColor(sf::Color::Black); // background for small view
+    mainRect.setFillColor(sf::Color::White); // background for small view
     mainRect.setPosition(0,0);
 
     window.draw(mainRect);

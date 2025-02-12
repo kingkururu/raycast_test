@@ -77,6 +77,7 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline sf::FloatRect VIEW_RECT;
     inline unsigned short FOV;
     inline size_t RAYS_NUM;
+    inline sf::Color GROUND_COLOR;
 
     // Score settings
     inline unsigned short INITIAL_SCORE;
