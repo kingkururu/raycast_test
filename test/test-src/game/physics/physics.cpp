@@ -202,7 +202,7 @@ namespace physics {
         float startY = player->getSpritePos().y;
         float playerAngle = player->getHeadingAngle(); // Player's rotation angle
     
-        size_t itCount = 80;  // Number of rays to cast
+        size_t itCount = 100;  // Number of rays to cast
         float screenWidth = static_cast<float>(MetaComponents::bigView.getSize().x);
         float screenHeight = static_cast<float>(MetaComponents::bigView.getSize().y);
         float centerY = screenHeight / 2.0f;
@@ -211,57 +211,64 @@ namespace physics {
         float angleStep = Constants::FOV / static_cast<float>(itCount);  // Angle step between rays
     
         wallLine.clear();
-        wallLine.setPrimitiveType(sf::Lines);
-    
+        wallLine.setPrimitiveType(sf::Quads);  // Use quads for filled walls
+
         for (size_t i = 0; i < itCount; ++i) {
             float angleOffset = (i - itCount / 2.0f) * angleStep;
             float rayAngle = playerAngle + angleOffset;
             float radian = rayAngle * 3.14159f / 180.0f; // Convert to radians
-    
+
             float dirX = cos(radian);
             float dirY = sin(radian);
             float stepSize = 1.0f;
-    
+
             float rayX = startX;
             float rayY = startY;
             bool hit = false;
             float rayDistance = 0.0f;
-    
+
             while (!hit) {
                 rayX += dirX * stepSize;
                 rayY += dirY * stepSize;
                 rayDistance += stepSize;
-    
+
                 int tileX = static_cast<int>(rayX) / Constants::TILE_WIDTH;
                 int tileY = static_cast<int>(rayY) / Constants::TILE_HEIGHT;
-    
+
                 if (tileX >= 0 && tileY >= 0 && tileX < tileMap->getTileMapWidth() && tileY < tileMap->getTileMapHeight()) {
                     std::unique_ptr<Tile>& tile = tileMap->getTile(tileY * tileMap->getTileMapWidth() + tileX);
-    
+
                     if (!tile->getWalkable()) {  // If the tile is a wall
                         hit = true;
-    
-                        // Correct fish-eye effect by adjusting for angle difference
+
+                        // Correct fish-eye effect
                         float correctedDistance = rayDistance * cos((rayAngle - playerAngle) * 3.14159f / 180.0f);
                         if (correctedDistance < 1.0f) correctedDistance = 1.0f;
-    
-                        // Compute the height of the projected wall
+
+                        // Compute projected wall height
                         float wallHeight = wallHeightScale / correctedDistance;
-    
+
                         // Compute screen position for this wall slice
                         float screenX = (i / static_cast<float>(itCount)) * screenWidth;
                         float wallTopY = centerY - wallHeight / 2.0f;
                         float wallBottomY = centerY + wallHeight / 2.0f;
-    
+
+                        // Adjust brightness based on distance
+                        float maxDistance = 20.0f;
+                        float brightnessFactor = std::max(0.1f, 1.0f - (correctedDistance / maxDistance));
+                        sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 200 * brightnessFactor), 0);
+
                         // Store raycasting lines for debugging (2D representation)
                         lines[2 * i].position = sf::Vector2f(startX, startY);
                         lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
                         lines[2 * i].color = sf::Color::Red;
                         lines[2 * i + 1].color = sf::Color::Red;
-    
-                        // Store vertical wall lines (3D representation)
-                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), sf::Color::Red));
-                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallBottomY), sf::Color::Red));
+
+                        // Define quad vertices for the wall slice
+                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), wallColor));     // Top Left
+                        wallLine.append(sf::Vertex(sf::Vector2f(screenX + (screenWidth / itCount), wallTopY), wallColor));   // Top Right
+                        wallLine.append(sf::Vertex(sf::Vector2f(screenX + (screenWidth / itCount), wallBottomY), wallColor)); // Bottom Right
+                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallBottomY), wallColor));  // Bottom Left
                     }
                 }
             }

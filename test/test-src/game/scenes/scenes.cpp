@@ -283,7 +283,7 @@ void gamePlayScene::updateDrawablesVisibility(){
 // Draws only the visible sprite and texts
 void gamePlayScene::draw() {
     try {
-        window.clear(sf::Color::Black); // set the base baskground color blue
+        window.clear(sf::Color::White); // set the base baskground color white
 
         drawInBigView();
         drawInSmallView();
@@ -307,7 +307,7 @@ void gamePlayScene::drawInSmallView(){
 
     // temporary 
     sf::RectangleShape mainRect(sf::Vector2f(Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_Y));
-    mainRect.setFillColor(sf::Color::Blue);
+    mainRect.setFillColor(sf::Color::Black); // background for small view
     mainRect.setPosition(0,0);
 
     window.draw(mainRect);
@@ -317,48 +317,6 @@ void gamePlayScene::drawInSmallView(){
 
     window.draw(rays); 
 }
-
-// void gamePlayScene::drawRays3D() {
-//     // float screenWidth = static_cast<float>(MetaComponents::bigView.getSize().x);
-//     // float screenHeight = static_cast<float>(MetaComponents::bigView.getSize().y);
-//     // float centerY = screenHeight / 2.0f;
-
-//     // // Constant to scale wall heights (adjust for better visuals)
-//     // const float wallHeightScale = 2500.0f;
-
-//     // // Draw vertical lines resembling 3D walls for each ray
-//     // for (size_t i = 0; i < Constants::FOV; ++i) {
-//     //     sf::Vertex& startVertex = rays[2 * i];
-//     //     sf::Vertex& endVertex = rays[2 * i + 1];
-
-//     //     // Compute the ray distance
-//     //     float dx = endVertex.position.x - startVertex.position.x;
-//     //     float dy = endVertex.position.y - startVertex.position.y;
-//     //     float rayDistance = std::sqrt(dx * dx + dy * dy);
-
-//     //     // Avoid division by zero and small distances
-//     //     if (rayDistance < 1.0f) rayDistance = 1.0f;
-
-//     //     // Calculate the height of the wall to be drawn
-//     //     float wallHeight = wallHeightScale / rayDistance;
-
-//     //     // Compute the x position for this wall slice on the screen
-//     //     float screenX = (i / static_cast<float>(Constants::FOV)) * screenWidth;
-
-//     //     // Define the top and bottom y-coordinates for the wall segment
-//     //     float wallTopY = centerY - wallHeight / 2.0f;
-//     //     float wallBottomY = centerY + wallHeight / 2.0f;
-
-//     //     // Draw a vertical line representing the wall
-//     //     sf::Vertex wallLine[] = {
-//     //         sf::Vertex(sf::Vector2f(screenX, wallTopY), sf::Color::Red),
-//     //         sf::Vertex(sf::Vector2f(screenX, wallBottomY), sf::Color::Red)
-//     //     };
-
-//         // Render the wall slice
-//         window.draw(wallLine, 2, sf::Lines);
-//     }
-// }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////

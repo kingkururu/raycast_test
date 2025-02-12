@@ -113,15 +113,13 @@ class gamePlayScene : public virtual Scene{
     if (drawable && drawable->getVisibleState()) window.draw(*drawable);
   }
 
-  void drawRays3D();
-
   std::unique_ptr<Player> player; 
 
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   
   std::unique_ptr<TileMap> tileMap1; 
   sf::VertexArray rays;
   sf::VertexArray wallLine; 
-  
+
   // std::unique_ptr<MusicClass> backgroundMusic;
 
   // std::unique_ptr<SoundClass> playerJumpSound; 
