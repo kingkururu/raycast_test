@@ -130,6 +130,7 @@ namespace Constants {
                                 config["world"]["view"]["initial_center"]["y"].as<float>()};
             VIEW_RECT = { 0.0f, 0.0f, VIEW_SIZE_X, VIEW_SIZE_Y };
             FOV = config["world"]["FOV"].as<unsigned short>(); 
+            RAYS_NUM = config["world"]["rays_num"].as<size_t>(); 
 
             // Load score settings
             INITIAL_SCORE = config["score"]["initial"].as<unsigned short>(); 

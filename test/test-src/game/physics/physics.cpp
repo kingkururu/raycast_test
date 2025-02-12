@@ -198,20 +198,32 @@ namespace physics {
     }
 
     void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines, sf::VertexArray& wallLine) {
+       
+        if(!player || !tileMap){
+            log_error("tile or player is not initialized");
+            return;
+        }
+
         float startX = player->getSpritePos().x;
         float startY = player->getSpritePos().y;
         float playerAngle = player->getHeadingAngle(); // Player's rotation angle
-    
-        size_t itCount = 100;  // Number of rays to cast
+
+        size_t itCount = Constants::RAYS_NUM / 2;
         float screenWidth = static_cast<float>(MetaComponents::bigView.getSize().x);
         float screenHeight = static_cast<float>(MetaComponents::bigView.getSize().y);
         float centerY = screenHeight / 2.0f;
-    
+
         const float wallHeightScale = 2500.0f;  // Scale factor for wall height
         float angleStep = Constants::FOV / static_cast<float>(itCount);  // Angle step between rays
-    
+        const float maxRayDistance = 1000.0f; // Maximum allowed ray distance to prevent infinite loops
+
         wallLine.clear();
         wallLine.setPrimitiveType(sf::Quads);  // Use quads for filled walls
+        lines.clear();
+        lines.setPrimitiveType(sf::Lines);
+        lines.resize(2 * itCount); // Ensure enough space for ray visualization
+
+        float sliceWidth = screenWidth / static_cast<float>(itCount); // Corrected wall slice width
 
         for (size_t i = 0; i < itCount; ++i) {
             float angleOffset = (i - itCount / 2.0f) * angleStep;
@@ -227,7 +239,7 @@ namespace physics {
             bool hit = false;
             float rayDistance = 0.0f;
 
-            while (!hit) {
+            while (!hit && rayDistance < maxRayDistance) {
                 rayX += dirX * stepSize;
                 rayY += dirY * stepSize;
                 rayDistance += stepSize;
@@ -235,41 +247,43 @@ namespace physics {
                 int tileX = static_cast<int>(rayX) / Constants::TILE_WIDTH;
                 int tileY = static_cast<int>(rayY) / Constants::TILE_HEIGHT;
 
-                if (tileX >= 0 && tileY >= 0 && tileX < tileMap->getTileMapWidth() && tileY < tileMap->getTileMapHeight()) {
-                    std::unique_ptr<Tile>& tile = tileMap->getTile(tileY * tileMap->getTileMapWidth() + tileX);
+                if (tileX < 0 || tileY < 0 || tileX >= tileMap->getTileMapWidth() || tileY >= tileMap->getTileMapHeight()) {
+                    break; // Exit if ray goes out of bounds
+                }
 
-                    if (!tile->getWalkable()) {  // If the tile is a wall
-                        hit = true;
+                auto& tile = tileMap->getTile(tileY * tileMap->getTileMapWidth() + tileX);
 
-                        // Correct fish-eye effect
-                        float correctedDistance = rayDistance * cos((rayAngle - playerAngle) * 3.14159f / 180.0f);
-                        if (correctedDistance < 1.0f) correctedDistance = 1.0f;
+                if (!tile->getWalkable()) {  // If the tile is a wall
+                hit = true;
 
-                        // Compute projected wall height
-                        float wallHeight = wallHeightScale / correctedDistance;
+                // Correct fish-eye effect
+                float correctedDistance = rayDistance * cos((rayAngle - playerAngle) * 3.14159f / 180.0f);
+                correctedDistance = std::max(1.0f, correctedDistance); // Prevent division by zero or extreme values
 
-                        // Compute screen position for this wall slice
-                        float screenX = (i / static_cast<float>(itCount)) * screenWidth;
-                        float wallTopY = centerY - wallHeight / 2.0f;
-                        float wallBottomY = centerY + wallHeight / 2.0f;
+                // Compute projected wall height
+                float wallHeight = wallHeightScale / correctedDistance;
 
-                        // Adjust brightness based on distance
-                        float maxDistance = 20.0f;
-                        float brightnessFactor = std::max(0.1f, 1.0f - (correctedDistance / maxDistance));
-                        sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 200 * brightnessFactor), 0);
+                // Compute screen position for this wall slice
+                float screenX = i * sliceWidth;
+                float wallTopY = centerY - wallHeight / 2.0f;
+                float wallBottomY = centerY + wallHeight / 2.0f;
 
-                        // Store raycasting lines for debugging (2D representation)
-                        lines[2 * i].position = sf::Vector2f(startX, startY);
-                        lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
-                        lines[2 * i].color = sf::Color::Red;
-                        lines[2 * i + 1].color = sf::Color::Red;
+                // Adjust brightness based on distance
+                const float maxDistance = 500.0f; // Adjust based on game scale
+                float brightnessFactor = std::max(0.2f, 1.0f - (correctedDistance / maxDistance));
+                sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 200 * brightnessFactor), 0);
 
-                        // Define quad vertices for the wall slice
-                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), wallColor));     // Top Left
-                        wallLine.append(sf::Vertex(sf::Vector2f(screenX + (screenWidth / itCount), wallTopY), wallColor));   // Top Right
-                        wallLine.append(sf::Vertex(sf::Vector2f(screenX + (screenWidth / itCount), wallBottomY), wallColor)); // Bottom Right
-                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallBottomY), wallColor));  // Bottom Left
-                    }
+                // Store raycasting lines for debugging (2D representation)
+                lines[2 * i].position = sf::Vector2f(startX, startY);
+                lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
+                lines[2 * i].color = sf::Color::Red;
+                lines[2 * i + 1].color = sf::Color::Red;
+
+                // Define quad vertices for the wall slice
+                wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), wallColor));     // Top Left
+                wallLine.append(sf::Vertex(sf::Vector2f(screenX + sliceWidth, wallTopY), wallColor));   // Top Right
+                wallLine.append(sf::Vertex(sf::Vector2f(screenX + sliceWidth, wallBottomY), wallColor)); // Bottom Right
+                wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallBottomY), wallColor));  // Bottom Left
                 }
             }
         }

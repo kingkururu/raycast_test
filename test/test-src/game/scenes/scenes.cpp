@@ -106,8 +106,10 @@ void gamePlayScene::createAssets() {
             std::cout << tile << "\n"; 
         }
         tileMap1 = std::make_unique<TileMap>(tiles1.data(), Constants::TILES_NUMBER, Constants::TILEMAP_WIDTH, Constants::TILEMAP_HEIGHT, Constants::TILE_WIDTH, Constants::TILE_HEIGHT, Constants::TILEMAP_FILEPATH, Constants::TILEMAP_POSITION); 
-        rays = sf::VertexArray(sf::Lines, Constants::FOV * 2);
-
+        rays = sf::VertexArray(sf::Lines, Constants::RAYS_NUM);
+        rays = sf::VertexArray(sf::Quads, Constants::RAYS_NUM);
+        //wallLine.setPrimitiveType(sf::Quads);  
+   
         // // Music
         // backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
         // if(backgroundMusic) backgroundMusic->returnMusic().play(); 
@@ -121,7 +123,7 @@ void gamePlayScene::createAssets() {
         // // Text
         // introText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
         // scoreText = std::make_unique<TextClass>(Constants::SCORETEXT_POSITION, Constants::SCORETEXT_SIZE, Constants::SCORETEXT_COLOR, Constants::TEXT_FONT, Constants::SCORETEXT_MESSAGE);
-        // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXT_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
+        // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXmake T_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
         // endingText->setVisibleState(false);
 
         // insertItemsInQuadtree(); 
