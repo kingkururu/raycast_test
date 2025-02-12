@@ -198,7 +198,6 @@ namespace physics {
     }
 
     void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines, sf::VertexArray& wallLine) {
-       
         if(!player || !tileMap){
             log_error("tile or player is not initialized");
             return;
@@ -250,6 +249,12 @@ namespace physics {
                 if (tileX < 0 || tileY < 0 || tileX >= tileMap->getTileMapWidth() || tileY >= tileMap->getTileMapHeight()) {
                     break; // Exit if ray goes out of bounds
                 }
+                
+                // Store raycasting lines for debugging (2D representation)
+                lines[2 * i].position = sf::Vector2f(startX, startY);
+                lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
+                lines[2 * i].color = sf::Color::Red;
+                lines[2 * i + 1].color = sf::Color::Red;
 
                 auto& tile = tileMap->getTile(tileY * tileMap->getTileMapWidth() + tileX);
 
@@ -269,15 +274,9 @@ namespace physics {
                 float wallBottomY = centerY + wallHeight / 2.0f;
 
                 // Adjust brightness based on distance
-                const float maxDistance = 500.0f; // Adjust based on game scale
+                const float maxDistance = 100.0f; // Adjust based on game scale
                 float brightnessFactor = std::max(0.2f, 1.0f - (correctedDistance / maxDistance));
-                sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 200 * brightnessFactor), 0);
-
-                // Store raycasting lines for debugging (2D representation)
-                lines[2 * i].position = sf::Vector2f(startX, startY);
-                lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
-                lines[2 * i].color = sf::Color::Red;
-                lines[2 * i + 1].color = sf::Color::Red;
+                sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 150 * brightnessFactor), 0);
 
                 // Define quad vertices for the wall slice
                 wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), wallColor));     // Top Left

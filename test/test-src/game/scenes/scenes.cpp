@@ -321,7 +321,7 @@ void gamePlayScene::drawInSmallView(){
 
     // temporary 
     sf::RectangleShape mainRect(sf::Vector2f(Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_Y));
-    mainRect.setFillColor(sf::Color::White); // background for small view
+    mainRect.setFillColor(sf::Color::Black); // background for small view
     mainRect.setPosition(0,0);
 
     window.draw(mainRect);
