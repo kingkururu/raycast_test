@@ -197,47 +197,77 @@ namespace physics {
         return originalPos;
     }
 
-    void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines){
+    void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& lines, sf::VertexArray& wallLine) {
         float startX = player->getSpritePos().x;
         float startY = player->getSpritePos().y;
-        // float startX = player->getSpritePos().x + player->getRects().width / 2;
-        // float startY = player->getSpritePos().y + player->getRects().height / 2;
-        float playerAngle = player->getHeadingAngle();  // Player's rotation angle (direction of the ray)
-
-        for(int i = 0; i < Constants::FOV; ++i){
-            // float angle = playerAngle + (i - Constants::FOV / 2) * 0.1f; 
-            float angle = playerAngle + (i - Constants::FOV / 2); 
-            float radian = angle * 3.14159f / 180.0f;  // Convert angle to radians
-            float dirX = cos(radian);  // X direction of the ray
-            float dirY = sin(radian);  // Y direction of the ray
+        float playerAngle = player->getHeadingAngle(); // Player's rotation angle
+    
+        size_t itCount = 80;  // Number of rays to cast
+        float screenWidth = static_cast<float>(MetaComponents::bigView.getSize().x);
+        float screenHeight = static_cast<float>(MetaComponents::bigView.getSize().y);
+        float centerY = screenHeight / 2.0f;
+    
+        const float wallHeightScale = 2500.0f;  // Scale factor for wall height
+        float angleStep = Constants::FOV / static_cast<float>(itCount);  // Angle step between rays
+    
+        wallLine.clear();
+        wallLine.setPrimitiveType(sf::Lines);
+    
+        for (size_t i = 0; i < itCount; ++i) {
+            float angleOffset = (i - itCount / 2.0f) * angleStep;
+            float rayAngle = playerAngle + angleOffset;
+            float radian = rayAngle * 3.14159f / 180.0f; // Convert to radians
+    
+            float dirX = cos(radian);
+            float dirY = sin(radian);
             float stepSize = 1.0f;
-
+    
             float rayX = startX;
             float rayY = startY;
-    
             bool hit = false;
+            float rayDistance = 0.0f;
+    
             while (!hit) {
                 rayX += dirX * stepSize;
                 rayY += dirY * stepSize;
+                rayDistance += stepSize;
     
-                // Check if the ray hits a tile
                 int tileX = static_cast<int>(rayX) / Constants::TILE_WIDTH;
                 int tileY = static_cast<int>(rayY) / Constants::TILE_HEIGHT;
     
                 if (tileX >= 0 && tileY >= 0 && tileX < tileMap->getTileMapWidth() && tileY < tileMap->getTileMapHeight()) {
                     std::unique_ptr<Tile>& tile = tileMap->getTile(tileY * tileMap->getTileMapWidth() + tileX);
-                    
-                    if (!tile->getWalkable()) {  // Check if the tile is not walkable
-                        hit = true;  // Ray hit a wall
+    
+                    if (!tile->getWalkable()) {  // If the tile is a wall
+                        hit = true;
+    
+                        // Correct fish-eye effect by adjusting for angle difference
+                        float correctedDistance = rayDistance * cos((rayAngle - playerAngle) * 3.14159f / 180.0f);
+                        if (correctedDistance < 1.0f) correctedDistance = 1.0f;
+    
+                        // Compute the height of the projected wall
+                        float wallHeight = wallHeightScale / correctedDistance;
+    
+                        // Compute screen position for this wall slice
+                        float screenX = (i / static_cast<float>(itCount)) * screenWidth;
+                        float wallTopY = centerY - wallHeight / 2.0f;
+                        float wallBottomY = centerY + wallHeight / 2.0f;
+    
+                        // Store raycasting lines for debugging (2D representation)
                         lines[2 * i].position = sf::Vector2f(startX, startY);
                         lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
                         lines[2 * i].color = sf::Color::Red;
                         lines[2 * i + 1].color = sf::Color::Red;
+    
+                        // Store vertical wall lines (3D representation)
+                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), sf::Color::Red));
+                        wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallBottomY), sf::Color::Red));
                     }
                 }
             }
         }
     }
+    
 // collisions 
     // circle collision 
     bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {

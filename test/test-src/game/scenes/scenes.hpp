@@ -120,6 +120,7 @@ class gamePlayScene : public virtual Scene{
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   
   std::unique_ptr<TileMap> tileMap1; 
   sf::VertexArray rays;
+  sf::VertexArray wallLine; 
   
   // std::unique_ptr<MusicClass> backgroundMusic;
 
