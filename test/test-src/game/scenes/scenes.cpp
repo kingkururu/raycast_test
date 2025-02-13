@@ -92,7 +92,8 @@ void gamePlayScene::createAssets() {
         player = std::make_unique<Player>(Constants::SPRITE1_POSITION, Constants::SPRITE1_SCALE, Constants::SPRITE1_TEXTURE, Constants::SPRITE1_SPEED, Constants::SPRITE1_ACCELERATION, 
                                           Constants::SPRITE1_ANIMATIONRECTS, Constants::SPRITE1_INDEXMAX, utils::convertToWeakPtrVector(Constants::SPRITE1_BITMASK));
         player->setRects(0); 
-
+        
+        frame = std::make_unique<Sprite>(Constants::FRAME_POSITION, Constants::FRAME_SCALE, Constants::FRAME_TEXTURE); 
         // button1 = std::make_unique<Button>(Constants::BUTTON1_POSITION, Constants::BUTTON1_SCALE, Constants::BUTTON1_TEXTURE, 
         //                            Constants::BUTTON1_ANIMATIONRECTS, Constants::BUTTON1_INDEXMAX, utils::convertToWeakPtrVector(Constants::BUTTON1_BITMASK));
         // button1->setRects(0); 
@@ -320,6 +321,7 @@ void gamePlayScene::drawInBigView(){
     window.draw(wallLine);
 
     drawVisibleObject(bullets[0]); 
+    drawVisibleObject(frame); 
 }
 
 void gamePlayScene::drawInSmallView(){

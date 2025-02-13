@@ -172,6 +172,13 @@ namespace Constants {
             BULLET_STARTINGSCALE = {config["sprites"]["bullet"]["scale"]["x"].as<float>(),
                             config["sprites"]["bullet"]["scale"]["y"].as<float>()};
 
+            // Load frame paths and settings
+            FRAME_PATH = config["sprites"]["frame"]["path"].as<std::string>();
+            FRAME_POSITION = {config["sprites"]["frame"]["position"]["x"].as<float>(),
+                                config["sprites"]["bullet"]["position"]["y"].as<float>()};
+            FRAME_SCALE = {config["sprites"]["frame"]["scale"]["x"].as<float>(),
+                            config["sprites"]["frame"]["scale"]["y"].as<float>()};
+
             // Load tile settings
             TILES_PATH = config["tiles"]["path"].as<std::string>();
             TILES_ROWS = config["tiles"]["rows"].as<unsigned short>();
@@ -248,7 +255,9 @@ namespace Constants {
         // sprites
         if (!SPRITE1_TEXTURE->loadFromFile(SPRITE1_PATH)) log_warning("Failed to load sprite1 texture");
         if (!TILES_TEXTURE->loadFromFile(TILES_PATH)) log_warning("Failed to load tiles texture");
-        if (!BULLET_TEXTURE->loadFromFile(BULLET_PATH)) log_warning("Failed to load bullet texture"); 
+        if (!BULLET_TEXTURE->loadFromFile(BULLET_PATH)) log_warning("Failed to load bullet texture");
+        if (!FRAME_TEXTURE->loadFromFile(FRAME_PATH)) log_warning("Failed to load frame texture");    
+        
         // music
         if (!BACKGROUNDMUSIC_MUSIC->openFromFile(BACKGROUNDMUSIC_PATH)) log_warning("Failed to load background music");
 
