@@ -71,32 +71,17 @@ void GameManager::handleEventInput() {
 
             MetaComponents::bigView = sf::View(visibleArea); 
         }
-        if (event.type == sf::Event::KeyPressed) {
+        if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+            bool isPressed = (event.type == sf::Event::KeyPressed); 
             switch (event.key.code) {
-                case sf::Keyboard::A:
-                    FlagSystem::flagEvents.aPressed = true;
-                    break;
-                case sf::Keyboard::S:
-                    FlagSystem::flagEvents.sPressed = true;
-                    break;
-                case sf::Keyboard::W:
-                    FlagSystem::flagEvents.wPressed = true;
-                    break;
-                case sf::Keyboard::D:
-                    FlagSystem::flagEvents.dPressed = true;
-                    break;
-                case sf::Keyboard::B:
-                    FlagSystem::flagEvents.bPressed = true;
-                    break;
-                case sf::Keyboard::Space:
-                    FlagSystem::flagEvents.spacePressed = true;
-                    break;
-                default:
-                    break;
+                case sf::Keyboard::A: FlagSystem::flagEvents.aPressed = isPressed; break;
+                case sf::Keyboard::S: FlagSystem::flagEvents.sPressed = isPressed; break;
+                case sf::Keyboard::W: FlagSystem::flagEvents.wPressed = isPressed; break;
+                case sf::Keyboard::D: FlagSystem::flagEvents.dPressed = isPressed; break;
+                case sf::Keyboard::B: FlagSystem::flagEvents.bPressed = isPressed; break;
+                case sf::Keyboard::Space: FlagSystem::flagEvents.spacePressed = isPressed; break;
+                default: break;
             }
-        }
-        if (event.type == sf::Event::KeyReleased){
-            FlagSystem::flagEvents.flagKeyReleased(); // for some reason this can't go inside resetFlags
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             FlagSystem::flagEvents.mouseClicked = true;

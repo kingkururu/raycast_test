@@ -194,9 +194,6 @@ void gamePlayScene::handleMovementKeys() {
 
     // std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << ", inex: " << tileIndexInMap << "can walk: "<< canWalkOnTile<< std::endl;
     
-    if (FlagSystem::flagEvents.wPressed && canWalkOnTile){ // front 
-        physics::spriteMover(player, physics::followDirVec); 
-    }
     if (FlagSystem::flagEvents.aPressed){ // turn left
         player->returnSpritesShape().rotate(-1.0f); // degrees
         float newAngle = player->returnSpritesShape().getRotation();
@@ -206,6 +203,9 @@ void gamePlayScene::handleMovementKeys() {
         player->returnSpritesShape().rotate(1.0f); // degrees
         float newAngle = player->returnSpritesShape().getRotation();
         player->setHeadingAngle(newAngle);
+    }
+    if (FlagSystem::flagEvents.wPressed && canWalkOnTile){ // front 
+        physics::spriteMover(player, physics::followDirVec); 
     }
     if (FlagSystem::flagEvents.sPressed && canWalkOnTile){ // back
         physics::spriteMover(player, physics::followDirVecOpposite); 

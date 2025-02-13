@@ -200,7 +200,7 @@ namespace FlagSystem {
         }
 
         // resets keyboard flags only 
-        void flagKeyReleased() {
+        void allFlagKeyReleased() {
             wPressed = false;
             aPressed = false;
             sPressed = false;
