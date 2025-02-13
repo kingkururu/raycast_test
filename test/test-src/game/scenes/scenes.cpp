@@ -308,12 +308,14 @@ void gamePlayScene::drawInBigView(){
 
     // temporary 
     sf::RectangleShape sky(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
-    sky.setFillColor(sf::Color::Blue); // background for small view
+    sky.setFillColor(sf::Color::Blue); 
     sky.setPosition(0,0);
 
     sf::RectangleShape ground(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
-    ground.setFillColor(Constants::GROUND_COLOR); // background for small view
-    ground.setPosition(0, Constants::WORLD_HEIGHT / 2);
+    ground.setFillColor(Constants::GROUND_COLOR); 
+    ground.setPosition(0, MetaComponents::bigView.getSize().y / 2);
+
+    // frame->returnSpritesShape().setScale(MetaComponents::bigView.get) // fix frame resizing problem later
 
     window.draw(sky);
     window.draw(ground); 

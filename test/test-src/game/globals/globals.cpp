@@ -175,7 +175,7 @@ namespace Constants {
             // Load frame paths and settings
             FRAME_PATH = config["sprites"]["frame"]["path"].as<std::string>();
             FRAME_POSITION = {config["sprites"]["frame"]["position"]["x"].as<float>(),
-                                config["sprites"]["bullet"]["position"]["y"].as<float>()};
+                                config["sprites"]["frame"]["position"]["y"].as<float>()};
             FRAME_SCALE = {config["sprites"]["frame"]["scale"]["x"].as<float>(),
                             config["sprites"]["frame"]["scale"]["y"].as<float>()};
 
