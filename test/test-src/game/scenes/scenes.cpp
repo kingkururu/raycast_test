@@ -97,6 +97,10 @@ void gamePlayScene::createAssets() {
         //                            Constants::BUTTON1_ANIMATIONRECTS, Constants::BUTTON1_INDEXMAX, utils::convertToWeakPtrVector(Constants::BUTTON1_BITMASK));
         // button1->setRects(0); 
         // button1->setVisibleState(false); 
+         
+        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_STARTINGPOS, Constants::BULLET_STARTINGSCALE, Constants::BULLET_TEXTURE, Constants::BULLET_INITIALSPEED, Constants::BULLET_ACCELERATION, 
+                                                   Constants::BULLET_ANIMATIONRECTS, Constants::BULLET_INDEXMAX,  utils::convertToWeakPtrVector(Constants::BULLET_BITMASK)));
+        bullets[0]->setRects(0);
 
         // Tiles and tilemap
         for (int i = 0; i < Constants::TILES_NUMBER; ++i) {
@@ -126,7 +130,7 @@ void gamePlayScene::createAssets() {
         // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXmake T_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
         // endingText->setVisibleState(false);
 
-        // insertItemsInQuadtree(); 
+        insertItemsInQuadtree(); 
         setInitialTimes();
 
         globalTimer.End("initializing assets in scene 1"); // for logging purposes
@@ -141,8 +145,8 @@ void gamePlayScene::setInitialTimes(){
 }
 
 void gamePlayScene::insertItemsInQuadtree(){
-    quadtree.insert(player);  
-   
+    //quadtree.insert(player);  
+    quadtree.insert(bullets[bullets.size() - 1]); 
 }
 
 void gamePlayScene::respawnAssets(){
@@ -266,7 +270,7 @@ void gamePlayScene::updateEntityStates(){ // manually change the sprite's state
 }
 
 void gamePlayScene::changeAnimation(){ // change animation for sprites. change animation for texts if necessary     if (button1 && button1->getVisibleState()) button1->changeAnimation(); 
-   
+   for (const auto& bullet : bullets) if (bullet) bullet->changeAnimation();
 }
 
 void gamePlayScene::updatePlayerAndView() {
@@ -314,6 +318,8 @@ void gamePlayScene::drawInBigView(){
     window.draw(ground); 
 
     window.draw(wallLine);
+
+    drawVisibleObject(bullets[0]); 
 }
 
 void gamePlayScene::drawInSmallView(){

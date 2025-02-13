@@ -159,6 +159,18 @@ namespace Constants {
                                 config["sprites"]["sprite1"]["position"]["y"].as<float>()};
             SPRITE1_SCALE = {config["sprites"]["sprite1"]["scale"]["x"].as<float>(),
                             config["sprites"]["sprite1"]["scale"]["y"].as<float>()};
+            
+            // Load bullet paths and settings
+            BULLET_PATH = config["sprites"]["bullet"]["path"].as<std::string>();
+            BULLET_INITIALSPEED = config["sprites"]["bullet"]["speed"].as<float>();
+            BULLET_ACCELERATION = {config["sprites"]["bullet"]["acceleration"]["x"].as<float>(),
+                                config["sprites"]["bullet"]["acceleration"]["y"].as<float>()};           
+            BULLET_INDEXMAX = config["sprites"]["bullet"]["index_max"].as<short>();
+            BULLET_ANIMATIONROWS = config["sprites"]["bullet"]["animation_rows"].as<short>();
+            BULLET_STARTINGPOS = {config["sprites"]["bullet"]["position"]["x"].as<float>(),
+                                config["sprites"]["bullet"]["position"]["y"].as<float>()};
+            BULLET_STARTINGSCALE = {config["sprites"]["bullet"]["scale"]["x"].as<float>(),
+                            config["sprites"]["bullet"]["scale"]["y"].as<float>()};
 
             // Load tile settings
             TILES_PATH = config["tiles"]["path"].as<std::string>();
@@ -236,7 +248,7 @@ namespace Constants {
         // sprites
         if (!SPRITE1_TEXTURE->loadFromFile(SPRITE1_PATH)) log_warning("Failed to load sprite1 texture");
         if (!TILES_TEXTURE->loadFromFile(TILES_PATH)) log_warning("Failed to load tiles texture");
-     
+        if (!BULLET_TEXTURE->loadFromFile(BULLET_PATH)) log_warning("Failed to load bullet texture"); 
         // music
         if (!BACKGROUNDMUSIC_MUSIC->openFromFile(BACKGROUNDMUSIC_PATH)) log_warning("Failed to load background music");
 
@@ -255,6 +267,13 @@ namespace Constants {
             for (int col = 0; col < SPRITE1_INDEXMAX / SPRITE1_ANIMATIONROWS; ++col) {
                 // Create the IntRect for the current sprite
                 SPRITE1_ANIMATIONRECTS.emplace_back(sf::IntRect{col * 32, row * 32, 32, 32});
+            }
+        }
+
+        BULLET_ANIMATIONRECTS.reserve(BULLET_INDEXMAX); 
+        for (int row = 0; row < BULLET_ANIMATIONROWS; ++row) {
+            for (int col = 0; col < BULLET_INDEXMAX / BULLET_ANIMATIONROWS; ++col) {
+                BULLET_ANIMATIONRECTS.emplace_back(sf::IntRect{col * 16, row * 16, 16, 16});
             }
         }
 

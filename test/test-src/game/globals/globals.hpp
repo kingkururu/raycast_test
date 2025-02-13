@@ -114,6 +114,18 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline std::vector<sf::IntRect> SPRITE1_ANIMATIONRECTS;
     inline std::vector<std::shared_ptr<sf::Uint8[]>> SPRITE1_BITMASK;
 
+    // Bullet paths and settings
+    inline short BULLET_INDEXMAX;
+    inline short BULLET_ANIMATIONROWS;  
+    inline std::filesystem::path BULLET_PATH;
+    inline sf::Vector2f BULLET_STARTINGPOS;
+    inline sf::Vector2f BULLET_STARTINGSCALE;
+    inline sf::Vector2f BULLET_ACCELERATION;
+    inline float BULLET_INITIALSPEED;
+    inline std::shared_ptr<sf::Texture> BULLET_TEXTURE = std::make_shared<sf::Texture>();
+    inline std::vector<sf::IntRect> BULLET_ANIMATIONRECTS;
+    inline std::vector<std::shared_ptr<sf::Uint8[]>> BULLET_BITMASK;
+
     // Tile settings
     inline sf::Vector2f TILEMAP_POSITION; 
     inline std::filesystem::path TILES_PATH;

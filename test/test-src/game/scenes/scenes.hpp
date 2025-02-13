@@ -114,9 +114,12 @@ class gamePlayScene : public virtual Scene{
   }
 
   std::unique_ptr<Player> player; 
+  std::vector<std::unique_ptr<Bullet>> bullets; 
 
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   
   std::unique_ptr<TileMap> tileMap1; 
+
+  // for 3d walls
   sf::VertexArray rays;
   sf::VertexArray wallLine; 
 
