@@ -12,7 +12,7 @@ world:
       x: 0.0 # pixels, absoloute from window
       y: 0.0 # pixels, absoloute from window
   FOV: 60 # degrees
-  rays_num: 150 # number of rays
+  rays_num: 400 # number of rays
   ground_color: "CUSTOMCOLOR_BROWN"
 
 # Game score settings
@@ -49,11 +49,11 @@ sprites:
   sprite1:
     speed: 30.0
     acceleration:
-      x: 2.0 
-      y: 2.0
+      x: 1.0 # for 2d space
+      y: 1.0 # for 2d space
     jump_acceleration: 
-      x: 1.0
-      y: 0.2
+      x: 1.0 # for 2d space
+      y: 0.2 # for 2d space 
     index_max: 12 # number of total images for animation 
     animation_rows: 2 # number of rows for animation 
     path: "test/test-assets/sprites/png/player.png"

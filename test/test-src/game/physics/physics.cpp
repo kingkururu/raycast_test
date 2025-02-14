@@ -140,16 +140,20 @@ namespace physics {
 
     // moving x or y positions based on directions
     sf::Vector2f moveLeft( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration){
-        return { originalPos.x -= speed * MetaComponents::deltaTime * acceleration.x, originalPos.y };
+        // return { originalPos.x -= speed * MetaComponents::deltaTime * acceleration.x, originalPos.y };
+        return { originalPos.x -= speed * MetaComponents::deltaTime, originalPos.y };
     }
     sf::Vector2f moveRight( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration){
-        return { originalPos.x += speed * MetaComponents::deltaTime * acceleration.x, originalPos.y };
+        // return { originalPos.x += speed * MetaComponents::deltaTime * acceleration.x, originalPos.y };
+        return { originalPos.x += speed * MetaComponents::deltaTime, originalPos.y };
     }
     sf::Vector2f moveUp( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration){
-        return { originalPos.x, originalPos.y -= speed * MetaComponents::deltaTime * acceleration.y};
+        // return { originalPos.x, originalPos.y -= speed * MetaComponents::deltaTime * acceleration.y};
+        return { originalPos.x, originalPos.y -= speed * MetaComponents::deltaTime };
     }
     sf::Vector2f moveDown( float speed, sf::Vector2f originalPos, sf::Vector2f acceleration){
-        return { originalPos.x, originalPos.y += speed * MetaComponents::deltaTime * acceleration.y};
+        // return { originalPos.x, originalPos.y += speed * MetaComponents::deltaTime * acceleration.y};
+        return { originalPos.x, originalPos.y += speed * MetaComponents::deltaTime};
     }
 
     sf::Vector2f jump(float& elapsedTime, float speed, sf::Vector2f originalPos, sf::Vector2f acceleration){
