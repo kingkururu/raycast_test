@@ -1,21 +1,21 @@
-[2025-02-14 21:27:45.348] [info_logger] [info] Succesfuly read yaml file
-[2025-02-14 21:27:45.387] [info_logger] [info] 	Constants initialized 
-[2025-02-14 21:27:45.424] [info_logger] [info] scene made
-[2025-02-14 21:27:45.424] [info_logger] [info] scene made
-[2025-02-14 21:27:45.424] [info_logger] [info] scene made
-[2025-02-14 21:27:45.424] [info_logger] [info] 	Game initialized
-[2025-02-14 21:27:45.424] [info_logger] [info] Sprite initialized successfully
-[2025-02-14 21:27:45.424] [info_logger] [info] Sprite initialized successfully
-[2025-02-14 21:27:45.424] [info_logger] [info] Sprite initialized successfully
-[2025-02-14 21:27:45.424] [info_logger] [info] Tile map initialized successfully
-[2025-02-14 21:27:45.424] [info_logger] [info] Sprite inserted into quadtree node.
-[2025-02-14 21:27:45.424] [info_logger] [info] initializing assets in scene 1: 0.159000ms
-[2025-02-14 21:28:05.585] [info_logger] [info] Window close event detected.
-[2025-02-14 21:28:05.624] [info_logger] [info] 	Game Ended
+[2025-02-15 19:26:09.418] [info_logger] [info] Succesfuly read yaml file
+[2025-02-15 19:26:09.461] [info_logger] [info] 	Constants initialized 
+[2025-02-15 19:26:09.507] [info_logger] [info] scene made
+[2025-02-15 19:26:09.507] [info_logger] [info] scene made
+[2025-02-15 19:26:09.507] [info_logger] [info] scene made
+[2025-02-15 19:26:09.507] [info_logger] [info] 	Game initialized
+[2025-02-15 19:26:09.507] [info_logger] [info] Sprite initialized successfully
+[2025-02-15 19:26:09.507] [info_logger] [info] Sprite initialized successfully
+[2025-02-15 19:26:09.507] [info_logger] [info] Sprite initialized successfully
+[2025-02-15 19:26:09.507] [info_logger] [info] Tile map initialized successfully
+[2025-02-15 19:26:09.507] [info_logger] [info] Sprite inserted into quadtree node.
+[2025-02-15 19:26:09.507] [info_logger] [info] initializing assets in scene 1: 0.292000ms
+[2025-02-15 19:26:50.890] [info_logger] [info] Window close event detected.
+[2025-02-15 19:26:50.943] [info_logger] [info] 	Game Ended
 
-[2025-02-14 21:28:05.624] [info_logger] [info] objects cleared.
-[2025-02-14 21:28:05.625] [info_logger] [info] Quadtree cleared.
-[2025-02-14 21:28:05.625] [info_logger] [info] objects cleared.
-[2025-02-14 21:28:05.625] [info_logger] [info] Quadtree cleared.
-[2025-02-14 21:28:05.625] [info_logger] [info] objects cleared.
-[2025-02-14 21:28:05.625] [info_logger] [info] Quadtree cleared.
+[2025-02-15 19:26:50.943] [info_logger] [info] objects cleared.
+[2025-02-15 19:26:50.943] [info_logger] [info] Quadtree cleared.
+[2025-02-15 19:26:50.943] [info_logger] [info] objects cleared.
+[2025-02-15 19:26:50.943] [info_logger] [info] Quadtree cleared.
+[2025-02-15 19:26:50.943] [info_logger] [info] objects cleared.
+[2025-02-15 19:26:50.943] [info_logger] [info] Quadtree cleared.
