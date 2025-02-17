@@ -113,9 +113,9 @@ void gamePlayScene::createAssets() {
         rays = sf::VertexArray(sf::Quads, Constants::RAYS_NUM);
    
         // // Music
-        // backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
-        // if(backgroundMusic) backgroundMusic->returnMusic().play(); 
-        // if(backgroundMusic) backgroundMusic->returnMusic().setLoop(Constants::BACKGROUNDMUSIC_LOOP);
+        backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
+        if(backgroundMusic) backgroundMusic->returnMusic().play(); 
+        if(backgroundMusic) backgroundMusic->returnMusic().setLoop(Constants::BACKGROUNDMUSIC_LOOP);
 
         // // Sound
         // playerJumpSound = std::make_unique<SoundClass>(Constants::PLAYERJUMP_SOUNDBUFF, Constants::PLAYERJUMPSOUND_VOLUME); 
@@ -124,7 +124,7 @@ void gamePlayScene::createAssets() {
 
         // // Text
         // introText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
-        // scoreText = std::make_unique<TextClass>(Constants::SCORETEXT_POSITION, Constants::SCORETEXT_SIZE, Constants::SCORETEXT_COLOR, Constants::TEXT_FONT, Constants::SCORETEXT_MESSAGE);
+        scoreText = std::make_unique<TextClass>(Constants::SCORETEXT_POSITION, Constants::SCORETEXT_SIZE, Constants::SCORETEXT_COLOR, Constants::TEXT_FONT, Constants::SCORETEXT_MESSAGE);
         // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXmake T_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
         // endingText->setVisibleState(false);
 
@@ -236,7 +236,7 @@ void gamePlayScene::handleMovementKeys() {
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 
 void gamePlayScene::handleGameEvents() { 
     // scoreText->getText().setPosition(MetaComponents::smallView.getCenter().x - 460, MetaComponents::smallView.getCenter().y - 270);
-    // scoreText->getText().setString("Score: " + std::to_string(score));
+    scoreText->getText().setString("Score: " + std::to_string(score));
 
     physics::calculateRayCast3d(player, tileMap1, rays, wallLine); // modifies the ray 
 } 
@@ -321,6 +321,7 @@ void gamePlayScene::drawInBigView(){
 
     drawVisibleObject(bullets[0]); 
     drawVisibleObject(frame); 
+    drawVisibleObject(scoreText); 
 }
 
 void gamePlayScene::drawInSmallView(){

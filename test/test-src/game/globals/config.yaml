@@ -131,9 +131,9 @@ score_text:
   font_path: "test/test-assets/fonts/ttf/font1.ttf"
   message: "Score: " # actual content in the text
   position:
-    x: 500.0 # pixels 
-    y: 100.0 # pixels 
-  color: "CUSTOMCOLOR_LIGHTCORAL" # sf::Color
+    x: 200.0 # pixels 
+    y: 10.0 # pixels 
+  color: "WHITE" # sf::Color
 
 # Music settings
 music:

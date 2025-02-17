@@ -124,7 +124,7 @@ class gamePlayScene : public virtual Scene{
   sf::VertexArray rays;
   sf::VertexArray wallLine; 
 
-  // std::unique_ptr<MusicClass> backgroundMusic;
+  std::unique_ptr<MusicClass> backgroundMusic;
 
   // std::unique_ptr<SoundClass> playerJumpSound; 
   // std::unique_ptr<SoundClass> coinHitSound; 
@@ -132,7 +132,7 @@ class gamePlayScene : public virtual Scene{
   // std::unique_ptr<SoundClass> buttonClickSound; 
 
   // std::unique_ptr<TextClass> introText; 
-  // std::unique_ptr<TextClass> scoreText; 
+  std::unique_ptr<TextClass> scoreText; 
   // std::unique_ptr<TextClass> endingText; 
 
   size_t score {};
