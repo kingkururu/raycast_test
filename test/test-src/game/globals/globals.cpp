@@ -146,7 +146,7 @@ namespace Constants {
             SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = config["sprite"]["out_of_bounds_adjustment"].as<unsigned short>();
             PLAYER_Y_POS_BOUNDS_RUN = config["sprite"]["player_y_pos_bounds_run"].as<unsigned short>();
 
-            // Load sprite paths and settings
+            // Load player paths and settings
             SPRITE1_PATH = config["sprites"]["sprite1"]["path"].as<std::string>();
             SPRITE1_SPEED = config["sprites"]["sprite1"]["speed"].as<float>();
             SPRITE1_ACCELERATION = {config["sprites"]["sprite1"]["acceleration"]["x"].as<float>(),
@@ -159,6 +159,18 @@ namespace Constants {
                                 config["sprites"]["sprite1"]["position"]["y"].as<float>()};
             SPRITE1_SCALE = {config["sprites"]["sprite1"]["scale"]["x"].as<float>(),
                             config["sprites"]["sprite1"]["scale"]["y"].as<float>()};
+
+            // Load enemy paths and settings
+            ENEMY_PATH = config["sprites"]["enemy"]["path"].as<std::string>();
+            ENEMY_SPEED = config["sprites"]["enemy"]["speed"].as<float>();
+            ENEMY_ACCELERATION = {config["sprites"]["enemy"]["acceleration"]["x"].as<float>(),
+                                config["sprites"]["enemy"]["acceleration"]["y"].as<float>()};         
+            ENEMY_INDEXMAX = config["sprites"]["enemy"]["index_max"].as<short>();
+            ENEMY_ANIMATIONROWS = config["sprites"]["enemy"]["animation_rows"].as<short>();
+            ENEMY_POSITION = {config["sprites"]["enemy"]["position"]["x"].as<float>(),
+                                config["sprites"]["enemy"]["position"]["y"].as<float>()};
+            ENEMY_SCALE = {config["sprites"]["enemy"]["scale"]["x"].as<float>(),
+                            config["sprites"]["enemy"]["scale"]["y"].as<float>()};                
             
             // Load bullet paths and settings
             BULLET_PATH = config["sprites"]["bullet"]["path"].as<std::string>();
@@ -256,7 +268,8 @@ namespace Constants {
         if (!SPRITE1_TEXTURE->loadFromFile(SPRITE1_PATH)) log_warning("Failed to load sprite1 texture");
         if (!TILES_TEXTURE->loadFromFile(TILES_PATH)) log_warning("Failed to load tiles texture");
         if (!BULLET_TEXTURE->loadFromFile(BULLET_PATH)) log_warning("Failed to load bullet texture");
-        if (!FRAME_TEXTURE->loadFromFile(FRAME_PATH)) log_warning("Failed to load frame texture");    
+        if (!FRAME_TEXTURE->loadFromFile(FRAME_PATH)) log_warning("Failed to load frame texture");   
+        if (!ENEMY_TEXTURE->loadFromFile(ENEMY_PATH)) log_warning("Failed to load enemy texture");  
         
         // music
         if (!BACKGROUNDMUSIC_MUSIC->openFromFile(BACKGROUNDMUSIC_PATH)) log_warning("Failed to load background music");
@@ -278,6 +291,23 @@ namespace Constants {
                 SPRITE1_ANIMATIONRECTS.emplace_back(sf::IntRect{col * 32, row * 32, 32, 32});
             }
         }
+        SPRITE1_BITMASK.reserve(SPRITE1_INDEXMAX); 
+        // make bitmasks for tiles 
+        for (const auto& rect : SPRITE1_ANIMATIONRECTS ) {
+            SPRITE1_BITMASK.emplace_back(createBitmaskForBottom(SPRITE1_TEXTURE, rect, 0, 3));
+        }
+
+        ENEMY_ANIMATIONRECTS.reserve(ENEMY_INDEXMAX);
+        for (int row = 0; row < ENEMY_ANIMATIONROWS; ++row) {
+            for (int col = 0; col < ENEMY_INDEXMAX / ENEMY_ANIMATIONROWS; ++col) {
+                ENEMY_ANIMATIONRECTS.emplace_back(sf::IntRect{col * 32, row * 32, 32, 32});
+            }
+        }
+        ENEMY_BITMASK.reserve(ENEMY_INDEXMAX); 
+        // make bitmasks for tiles 
+        for (const auto& rect : ENEMY_ANIMATIONRECTS ) {
+            ENEMY_BITMASK.emplace_back(createBitmask(ENEMY_TEXTURE, rect));
+        }
 
         BULLET_ANIMATIONRECTS.reserve(BULLET_INDEXMAX); 
         for (int row = 0; row < BULLET_ANIMATIONROWS; ++row) {
@@ -298,12 +328,6 @@ namespace Constants {
         // make bitmasks for tiles 
         for (const auto& rect : TILES_SINGLE_RECTS ) {
             TILES_BITMASKS.emplace_back(createBitmask(TILES_TEXTURE, rect));
-        }
-
-        SPRITE1_BITMASK.reserve(SPRITE1_INDEXMAX); 
-        // make bitmasks for tiles 
-        for (const auto& rect : SPRITE1_ANIMATIONRECTS ) {
-            SPRITE1_BITMASK.emplace_back(createBitmaskForBottom(SPRITE1_TEXTURE, rect, 0, 3));
         }
         
         log_info("\tConstants initialized ");

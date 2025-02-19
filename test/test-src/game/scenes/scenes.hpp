@@ -116,6 +116,7 @@ class gamePlayScene : public virtual Scene{
   std::unique_ptr<Player> player; 
   std::vector<std::unique_ptr<Bullet>> bullets; 
   std::unique_ptr<Sprite> frame; 
+  std::unique_ptr<Obstacle> enemy;
   
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   
   std::unique_ptr<TileMap> tileMap1; 

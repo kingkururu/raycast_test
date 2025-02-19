@@ -98,6 +98,8 @@ void gamePlayScene::createAssets() {
         //                            Constants::BUTTON1_ANIMATIONRECTS, Constants::BUTTON1_INDEXMAX, utils::convertToWeakPtrVector(Constants::BUTTON1_BITMASK));
         // button1->setRects(0); 
         // button1->setVisibleState(false); 
+
+        enemy = std::make_unique<Obstacle>(Constants::ENEMY_POSITION, Constants::ENEMY_SCALE, Constants::ENEMY_TEXTURE, Constants::ENEMY_SPEED, Constants::ENEMY_ACCELERATION, Constants::ENEMY_ANIMATIONRECTS, Constants::ENEMY_INDEXMAX, utils::convertToWeakPtrVector(Constants::ENEMY_BITMASK)); 
          
         bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_STARTINGPOS, Constants::BULLET_STARTINGSCALE, Constants::BULLET_TEXTURE, Constants::BULLET_INITIALSPEED, Constants::BULLET_ACCELERATION, 
                                                    Constants::BULLET_ANIMATIONRECTS, Constants::BULLET_INDEXMAX,  utils::convertToWeakPtrVector(Constants::BULLET_BITMASK)));
@@ -112,7 +114,7 @@ void gamePlayScene::createAssets() {
         rays = sf::VertexArray(sf::Lines, Constants::RAYS_NUM);
         rays = sf::VertexArray(sf::Quads, Constants::RAYS_NUM);
    
-        // // Music
+        // Music
         backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
         if(backgroundMusic) backgroundMusic->returnMusic().play(); 
         if(backgroundMusic) backgroundMusic->returnMusic().setLoop(Constants::BACKGROUNDMUSIC_LOOP);
@@ -122,7 +124,7 @@ void gamePlayScene::createAssets() {
         // coinHitSound = std::make_unique<SoundClass>(Constants::COINHIT_SOUNDBUFF, Constants::COINHITSOUND_VOLUME); 
         // buttonClickSound = std::make_unique<SoundClass>(Constants::BUTTONCLICK_SOUNDBUFF, Constants::BUTTONCLICKSOUND_VOLUME);
 
-        // // Text
+        // Text
         // introText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
         scoreText = std::make_unique<TextClass>(Constants::SCORETEXT_POSITION, Constants::SCORETEXT_SIZE, Constants::SCORETEXT_COLOR, Constants::TEXT_FONT, Constants::SCORETEXT_MESSAGE);
         // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXmake T_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
@@ -143,8 +145,9 @@ void gamePlayScene::setInitialTimes(){
 }
 
 void gamePlayScene::insertItemsInQuadtree(){
-    //quadtree.insert(player);  
+    quadtree.insert(player);  
     quadtree.insert(bullets[bullets.size() - 1]); 
+    quadtree.insert(enemy); 
 }
 
 void gamePlayScene::respawnAssets(){
@@ -269,6 +272,7 @@ void gamePlayScene::updateEntityStates(){ // manually change the sprite's state
 
 void gamePlayScene::changeAnimation(){ // change animation for sprites. change animation for texts if necessary     if (button1 && button1->getVisibleState()) button1->changeAnimation(); 
    for (const auto& bullet : bullets) if (bullet) bullet->changeAnimation();
+   if (enemy) enemy->changeAnimation(); 
 }
 
 void gamePlayScene::updatePlayerAndView() {
@@ -322,6 +326,7 @@ void gamePlayScene::drawInBigView(){
     drawVisibleObject(bullets[0]); 
     drawVisibleObject(frame); 
     drawVisibleObject(scoreText); 
+    drawVisibleObject(enemy); 
 }
 
 void gamePlayScene::drawInSmallView(){
