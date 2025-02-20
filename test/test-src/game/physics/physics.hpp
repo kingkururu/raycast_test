@@ -81,8 +81,6 @@ namespace physics{
     sf::Vector2f jump(float& elapsedTime, float speed, sf::Vector2f originalPos, sf::Vector2f acceleration = {0.1f, 0.1f}); 
     sf::Vector2f jumpToSurface(float& elapsedTime, float speed, sf::Vector2f originalPos, sf::Vector2f acceleration = {0.1f, 0.1f}); 
 
-    void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& rays, sf::VertexArray& wallLine);
-
     template<typename SpriteType, typename MoveFunc>
     void spriteMover(std::unique_ptr<SpriteType>& sprite, const MoveFunc& moveFunc) {
         float speed = sprite->getSpeed(); 
@@ -290,5 +288,55 @@ namespace physics{
             return collisionLambda(data1, data2, collisionFunc);
         }
         return false; // default 
+    }
+    void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& rays, sf::VertexArray& wallLine);
+    template<typename playerType, typename objectType>
+    void calculateRayCast3d(playerType&& obj1, objectType&& obj2) {
+        auto getSprite = [](auto&& obj1) -> auto& {
+            if constexpr (std::is_pointer_v<std::decay_t<decltype(obj1)>>) return *obj1; // Dereference unique_ptr or raw pointer
+            else return obj1; // Direct reference if it's an object
+        };
+        
+        auto& sprite1 = getSprite(std::forward<playerType>(obj1));
+        auto& sprite2 = getSprite(std::forward<objectType>(obj2));
+        sf::Vector2f playerPos = sprite1->getSpritePos();
+        float playerAngle = sprite1->getHeadingAngle();
+    
+        constexpr float PI = 3.14159265358979323846f;
+        constexpr float maxRayDistance = 1000.0f;
+        size_t itCount = Constants::RAYS_NUM / 2;
+        const float angleStep = Constants::FOV / static_cast<float>(itCount);
+    
+        bool enemyVisible = false;
+        float enemyDistance = maxRayDistance;
+        float screenWidth = static_cast<float>(MetaComponents::bigView.getSize().x);
+        float enemyScreenX = 0.0f;
+    
+        for (size_t i = 0; i < itCount; ++i) {
+            float angleOffset = (i - itCount / 2.0f) * angleStep;
+            float rayAngle = playerAngle + angleOffset;
+            float radian = rayAngle * (PI / 180.0f);
+    
+            sf::Vector2f rayDir(std::cos(radian), std::sin(radian));
+            sf::Vector2f rayPos = playerPos;
+            float rayDistance = 0.0f;
+    
+            while (rayDistance < maxRayDistance) {
+                rayPos += rayDir;
+                rayDistance += 1.0f;
+    
+                if (collisionHelper(sprite1, sprite2, boundingBoxCollision)) {
+                    enemyVisible = true;
+                    enemyDistance = rayDistance;
+                    enemyScreenX = (i / static_cast<float>(itCount)) * screenWidth;
+                    break;
+                }
+            }
+    
+            if (enemyVisible) break;  
+        }
+    
+        sprite2->setVisibleState(enemyVisible);
+        std::cout << enemyVisible << std::endl;
     }
 }

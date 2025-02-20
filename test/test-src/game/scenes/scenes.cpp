@@ -242,6 +242,7 @@ void gamePlayScene::handleGameEvents() {
     scoreText->getText().setString("Score: " + std::to_string(score));
 
     physics::calculateRayCast3d(player, tileMap1, rays, wallLine); // modifies the ray 
+    physics::calculateRayCast3d(player, enemy); 
 } 
 
 void gamePlayScene::handleSceneFlags(){

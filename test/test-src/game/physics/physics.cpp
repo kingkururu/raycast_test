@@ -250,10 +250,8 @@ namespace physics {
                 int tileX = static_cast<int>(rayX) / Constants::TILE_WIDTH;
                 int tileY = static_cast<int>(rayY) / Constants::TILE_HEIGHT;
 
-                if (tileX < 0 || tileY < 0 || tileX >= tileMap->getTileMapWidth() || tileY >= tileMap->getTileMapHeight()) {
-                    break; // Exit if ray goes out of bounds
-                }
-                
+                if (tileX < 0 || tileY < 0 || tileX >= tileMap->getTileMapWidth() || tileY >= tileMap->getTileMapHeight()) break; // Exit if ray goes out of bounds
+            
                 // Store raycasting lines for debugging (2D representation)
                 lines[2 * i].position = sf::Vector2f(startX, startY);
                 lines[2 * i + 1].position = sf::Vector2f(rayX, rayY);
@@ -262,8 +260,7 @@ namespace physics {
 
                 auto& tile = tileMap->getTile(tileY * tileMap->getTileMapWidth() + tileX);
 
-                if (!tile->getWalkable()) {  // If the tile is a wall
-                hit = true;
+                if (!tile->getWalkable()) { hit = true;
 
                 // Correct fish-eye effect
                 float correctedDistance = rayDistance * cos((rayAngle - playerAngle) * 3.14159f / 180.0f);
