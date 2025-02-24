@@ -277,7 +277,9 @@ namespace physics {
                 // Adjust brightness based on distance
                 const float maxDistance = 100.0f; // Adjust based on game scale
                 float brightnessFactor = std::max(0.2f, 1.0f - (correctedDistance / maxDistance));
-                sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 150 * brightnessFactor), 0);
+                sf::Uint8 color = static_cast<sf::Uint8>(50 + 150 * brightnessFactor);
+               // sf::Color wallColor(0, static_cast<sf::Uint8>(50 + 150 * brightnessFactor), 0);
+                sf::Color wallColor(color, color, color);
 
                 // Define quad vertices for the wall slice
                 wallLine.append(sf::Vertex(sf::Vector2f(screenX, wallTopY), wallColor));     // Top Left
