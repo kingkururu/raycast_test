@@ -242,7 +242,9 @@ void gamePlayScene::handleGameEvents() {
     scoreText->getText().setString("Score: " + std::to_string(score));
 
     physics::calculateRayCast3d(player, tileMap1, rays, wallLine); // modifies the ray 
-    physics::calculateRayCast3d(player, enemy); 
+   // physics::calculateRayCast3d(player, enemy, &quadtree); 
+    //physics::calculateRayCast3d(player, enemy); 
+
 } 
 
 void gamePlayScene::handleSceneFlags(){
@@ -327,7 +329,11 @@ void gamePlayScene::drawInBigView(){
     drawVisibleObject(bullets[0]); 
     drawVisibleObject(frame); 
     drawVisibleObject(scoreText); 
-    drawVisibleObject(enemy); 
+
+
+    // enemy->changePosition(enemy->getScreenPosition());
+    // enemy->updatePos(); 
+    // drawVisibleObject(enemy); 
 }
 
 void gamePlayScene::drawInSmallView(){

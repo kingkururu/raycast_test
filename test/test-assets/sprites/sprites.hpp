@@ -26,8 +26,9 @@ public:
     sf::Vector2f getSpritePos() const { return position; };
     sf::Sprite& returnSpritesShape() const { return *spriteCreated; } 
     bool getVisibleState() const { return visibleState; }
-    void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
-
+    void setVisibleState(bool visibleState){ this->visibleState = visibleState; }
+    sf::Vector2f getScreenPosition() const { return screenPosition; }
+    void setScreenPosition(sf::Vector2f screenPosition){ this->screenPosition = screenPosition; }
     // base template for retreaving radius (based on sprite size) 
     virtual float getRadius() const;
 
@@ -54,6 +55,7 @@ protected:
     std::unique_ptr<sf::Sprite> spriteCreated;
     bool visibleState {};
     float radius{}; 
+    sf::Vector2f screenPosition {};
 };
 
 class Animated : public virtual Sprite {

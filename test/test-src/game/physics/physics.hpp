@@ -290,20 +290,18 @@ namespace physics{
         return false; // default 
     }
     void calculateRayCast3d(std::unique_ptr<Player>& player, std::unique_ptr<TileMap>& tileMap, sf::VertexArray& rays, sf::VertexArray& wallLine);
+   
     template<typename playerType, typename objectType>
-    void calculateRayCast3d(playerType&& obj1, objectType&& obj2) {
-        auto getSprite = [](auto&& obj1) -> auto& {
-            if constexpr (std::is_pointer_v<std::decay_t<decltype(obj1)>>) return *obj1; // Dereference unique_ptr or raw pointer
-            else return obj1; // Direct reference if it's an object
-        };
-        
-        auto& sprite1 = getSprite(std::forward<playerType>(obj1));
-        auto& sprite2 = getSprite(std::forward<objectType>(obj2));
-        sf::Vector2f playerPos = sprite1->getSpritePos();
-        float playerAngle = sprite1->getHeadingAngle();
+    void calculateRayCast3d(playerType& obj1, objectType& obj2) {
+        auto& sprite1 = *obj1; // obj1 is std::unique_ptr<Player>
+        auto& sprite2 = *obj2; // obj2 is std::unique_ptr<Obstacle>
     
-        constexpr float PI = 3.14159265358979323846f;
+        sf::Vector2f playerPos = sprite1.getSpritePos();
+        float playerAngle = sprite1.getHeadingAngle();
+    
+        constexpr float PI = 3.14159f;
         constexpr float maxRayDistance = 1000.0f;
+        constexpr float stepSize = 5.0f;  
         size_t itCount = Constants::RAYS_NUM / 2;
         const float angleStep = Constants::FOV / static_cast<float>(itCount);
     
@@ -312,31 +310,60 @@ namespace physics{
         float screenWidth = static_cast<float>(MetaComponents::bigView.getSize().x);
         float enemyScreenX = 0.0f;
     
+        sf::FloatRect enemyBounds = sprite2.returnSpritesShape().getGlobalBounds();
+    
+        std::cout << "[Raycasting] Player Position: (" << playerPos.x << ", " << playerPos.y << "), Angle: " << playerAngle << " degrees\n";
+        std::cout << "[Raycasting] Enemy Bounds: (" << enemyBounds.left << ", " << enemyBounds.top 
+                  << ", " << enemyBounds.width << ", " << enemyBounds.height << ")\n";
+    
         for (size_t i = 0; i < itCount; ++i) {
             float angleOffset = (i - itCount / 2.0f) * angleStep;
-            float rayAngle = playerAngle + angleOffset;
-            float radian = rayAngle * (PI / 180.0f);
+            float rayAngle = std::fmod(playerAngle + angleOffset, 360.0f);
+            if (rayAngle < 0) rayAngle += 360.0f;       
     
+            float radian = rayAngle * (PI / 180.0f);
             sf::Vector2f rayDir(std::cos(radian), std::sin(radian));
             sf::Vector2f rayPos = playerPos;
             float rayDistance = 0.0f;
     
-            while (rayDistance < maxRayDistance) {
-                rayPos += rayDir;
-                rayDistance += 1.0f;
+            std::cout << "[Raycasting] Ray " << i << " -> Angle: " << rayAngle 
+                      << " degrees (" << radian << " radians), Direction: (" 
+                      << rayDir.x << ", " << rayDir.y << ")\n";
     
-                if (collisionHelper(sprite1, sprite2, boundingBoxCollision)) {
+            while (rayDistance < maxRayDistance) {
+                rayPos += rayDir * stepSize;
+                rayDistance += stepSize;
+    
+                std::cout << "   [Ray " << i << "] Checking position: (" 
+                          << rayPos.x << ", " << rayPos.y << "), Distance: " << rayDistance << "\n";
+    
+                if (enemyBounds.contains(rayPos)) {
                     enemyVisible = true;
                     enemyDistance = rayDistance;
-                    enemyScreenX = (i / static_cast<float>(itCount)) * screenWidth;
+                    enemyScreenX = ((i + 0.5f) / itCount) * screenWidth;
+    
+                    std::cout << "   [Ray " << i << "] HIT enemy at (" << rayPos.x 
+                              << ", " << rayPos.y << "), Distance: " << rayDistance << "\n";
                     break;
                 }
             }
     
-            if (enemyVisible) break;  
+            if (enemyVisible) {
+                std::cout << "[Raycasting] Enemy detected! Stopping further rays.\n";
+                break;
+            }
         }
     
-        sprite2->setVisibleState(enemyVisible);
-        std::cout << enemyVisible << std::endl;
+        sprite2.setVisibleState(enemyVisible);
+        sprite2.setScreenPosition(sf::Vector2f(enemyScreenX, MetaComponents::bigView.getSize().y / 2));
+    
+        float scaleFactor = std::clamp(200.0f / enemyDistance, 0.1f, 1.5f);
+        sprite2.returnSpritesShape().setScale(sf::Vector2f{scaleFactor, scaleFactor});
+    
+        std::cout << "[Final Result] Enemy Visible: " << std::boolalpha << enemyVisible 
+                  << ", Distance: " << enemyDistance 
+                  << ", ScreenX: " << enemyScreenX 
+                  << ", Scale: (" << scaleFactor << ", " << scaleFactor << ")\n";
     }
-}
+    
+}    
