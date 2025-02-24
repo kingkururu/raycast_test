@@ -138,11 +138,17 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline std::vector<sf::IntRect> BULLET_ANIMATIONRECTS;
     inline std::vector<std::shared_ptr<sf::Uint8[]>> BULLET_BITMASK;
 
-    // Bullet paths and settings
+    // Frame paths and settings
     inline std::filesystem::path FRAME_PATH;
     inline sf::Vector2f FRAME_POSITION;
     inline sf::Vector2f FRAME_SCALE;
     inline std::shared_ptr<sf::Texture> FRAME_TEXTURE = std::make_shared<sf::Texture>();
+
+    // Background (in the big view) paths and settings
+    inline std::filesystem::path BACKGROUNDBIG_PATH;
+    inline sf::Vector2f BACKGROUNDBIG_POSITION;
+    inline sf::Vector2f BACKGROUNDBIG_SCALE;
+    inline std::shared_ptr<sf::Texture> BACKGROUNDBIG_TEXTURE = std::make_shared<sf::Texture>();
 
     // Tile settings
     inline sf::Vector2f TILEMAP_POSITION; 

@@ -94,6 +94,7 @@ void gamePlayScene::createAssets() {
         player->setRects(0); 
         
         frame = std::make_unique<Sprite>(Constants::FRAME_POSITION, Constants::FRAME_SCALE, Constants::FRAME_TEXTURE); 
+        backgroundBig = std::make_unique<Sprite>(Constants::BACKGROUNDBIG_POSITION, Constants::BACKGROUNDBIG_SCALE, Constants::BACKGROUNDBIG_TEXTURE); 
         // button1 = std::make_unique<Button>(Constants::BUTTON1_POSITION, Constants::BUTTON1_SCALE, Constants::BUTTON1_TEXTURE, 
         //                            Constants::BUTTON1_ANIMATIONRECTS, Constants::BUTTON1_INDEXMAX, utils::convertToWeakPtrVector(Constants::BUTTON1_BITMASK));
         // button1->setRects(0); 
@@ -310,19 +311,21 @@ void gamePlayScene::draw() {
 void gamePlayScene::drawInBigView(){
     window.setView(MetaComponents::bigView);
 
-    // temporary 
-    sf::RectangleShape sky(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
-    sky.setFillColor(sf::Color::Blue); 
-    sky.setPosition(0,0);
+    // // temporary 
+    // sf::RectangleShape sky(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
+    // sky.setFillColor(sf::Color::Blue); 
+    // sky.setPosition(0,0);
 
-    sf::RectangleShape ground(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
-    ground.setFillColor(Constants::GROUND_COLOR); 
-    ground.setPosition(0, MetaComponents::bigView.getSize().y / 2);
+    // sf::RectangleShape ground(sf::Vector2f(Constants::WORLD_WIDTH, Constants::WORLD_HEIGHT / 2));
+    // ground.setFillColor(Constants::GROUND_COLOR); 
+    // ground.setPosition(0, MetaComponents::bigView.getSize().y / 2);
 
     // frame->returnSpritesShape().setScale(MetaComponents::bigView.get) // fix frame resizing problem later
 
-    window.draw(sky);
-    window.draw(ground); 
+    // window.draw(sky);
+    // window.draw(ground); 
+
+    drawVisibleObject(backgroundBig);
 
     window.draw(wallLine);
 
