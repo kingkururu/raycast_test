@@ -126,7 +126,7 @@ void gamePlayScene::createAssets() {
         // buttonClickSound = std::make_unique<SoundClass>(Constants::BUTTONCLICK_SOUNDBUFF, Constants::BUTTONCLICKSOUND_VOLUME);
 
         // Text
-        // introText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
+        introText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
         scoreText = std::make_unique<TextClass>(Constants::SCORETEXT_POSITION, Constants::SCORETEXT_SIZE, Constants::SCORETEXT_COLOR, Constants::TEXT_FONT, Constants::SCORETEXT_MESSAGE);
         // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXmake T_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
         // endingText->setVisibleState(false);
@@ -244,7 +244,7 @@ void gamePlayScene::handleGameEvents() {
 
     physics::calculateRayCast3d(player, tileMap1, rays, wallLine); // modifies the ray 
    // physics::calculateRayCast3d(player, enemy, &quadtree); 
-    //physics::calculateRayCast3d(player, enemy); 
+    // physics::calculateRayCast3d(player, enemy); 
 
 } 
 
@@ -302,7 +302,6 @@ void gamePlayScene::draw() {
 
         window.display(); 
     } 
-    
     catch (const std::exception& e) {
         log_error("Exception in draw: " + std::string(e.what()));
     }
@@ -318,7 +317,7 @@ void gamePlayScene::drawInBigView(){
     drawVisibleObject(bullets[0]); 
     drawVisibleObject(frame); 
     drawVisibleObject(scoreText); 
-
+    drawVisibleObject(introText);
 
     // enemy->changePosition(enemy->getScreenPosition());
     // enemy->updatePos(); 
@@ -348,10 +347,9 @@ void gamePlayScene::drawInSmallView(){
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 void gamePlayScene2::createAssets() {
- try {
-       
+    try {
+        
     } 
-
     catch (const std::exception& e) {
         log_error("Exception in createAssets: " + std::string(e.what()));
     }
@@ -367,7 +365,6 @@ void gamePlayScene2::draw() {
         
         window.display(); 
     } 
-    
     catch (const std::exception& e) {
         log_error("Exception in gamePlayScene2 draw: " + std::string(e.what()));
     }
@@ -378,7 +375,6 @@ void gamePlayScene2::update() {
         handleInvisibleSprites(); // do a sprite pooling or actually delete all
 
         window.setView(MetaComponents::smallView); 
-        
     }
     catch (const std::exception& e) {
         log_error("Exception in updateSprites: " + std::string(e.what()));

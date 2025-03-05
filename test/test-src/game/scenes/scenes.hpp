@@ -134,7 +134,7 @@ class gamePlayScene : public virtual Scene{
   // std::unique_ptr<SoundClass> playerDeadSound;
   // std::unique_ptr<SoundClass> buttonClickSound; 
 
-  // std::unique_ptr<TextClass> introText; 
+  std::unique_ptr<TextClass> introText; 
   std::unique_ptr<TextClass> scoreText; 
   // std::unique_ptr<TextClass> endingText; 
 
