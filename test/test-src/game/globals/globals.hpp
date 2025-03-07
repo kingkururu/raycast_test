@@ -91,15 +91,15 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
     inline unsigned short PLAYER_Y_POS_BOUNDS_RUN;
 
-    // Background settings
-    inline float BACKGROUND_SPEED;
-    inline std::filesystem::path BACKGROUNDSPRITE_PATH;
-    inline std::filesystem::path BACKGROUNDSPRITE_PATH2;
-    inline sf::Vector2f BACKGROUND_POSITION;
-    inline sf::Vector2f BACKGROUND_SCALE;
-    inline SpriteComponents::Direction BACKGROUND_MOVING_DIRECTION;
-    inline std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE = std::make_shared<sf::Texture>();
-    inline std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE2 = std::make_shared<sf::Texture>();
+    // // Background settings
+    // inline float BACKGROUND_SPEED;
+    // inline std::filesystem::path BACKGROUNDSPRITE_PATH;
+    // inline std::filesystem::path BACKGROUNDSPRITE_PATH2;
+    // inline sf::Vector2f BACKGROUND_POSITION;
+    // inline sf::Vector2f BACKGROUND_SCALE;
+    // inline SpriteComponents::Direction BACKGROUND_MOVING_DIRECTION;
+    // inline std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE = std::make_shared<sf::Texture>();
+    // inline std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE2 = std::make_shared<sf::Texture>();
   
     // player paths and settings
     inline short SPRITE1_INDEXMAX;
