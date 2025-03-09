@@ -78,12 +78,24 @@ TEST_TARGET := sfml_game_test
 all: $(TARGET)
 
 # Check and install required dependencies via Homebrew
+# install_deps:
+# 	@brew list spdlog >/dev/null 2>&1 || (echo "Installing spdlog..."; brew install spdlog)
+# 	@brew list fmt >/dev/null 2>&1 || (echo "Installing fmt..."; brew install fmt)
+# 	@brew list sfml >/dev/null 2>&1 || (echo "Installing sfml..."; brew install sfml)
+# 	@brew list yaml-cpp >/dev/null 2>&1 || (echo "Installing yaml-cpp..."; brew install yaml-cpp) 
+# 	@brew list catch2 >/dev/null 2>&1 || (echo "Installing catch2..."; brew install catch2)
 install_deps:
-	@brew list spdlog >/dev/null 2>&1 || (echo "Installing spdlog..."; brew install spdlog)
-	@brew list fmt >/dev/null 2>&1 || (echo "Installing fmt..."; brew install fmt)
-	@brew list sfml >/dev/null 2>&1 || (echo "Installing sfml..."; brew install sfml)
-	@brew list yaml-cpp >/dev/null 2>&1 || (echo "Installing yaml-cpp..."; brew install yaml-cpp) 
-	@brew list catch2 >/dev/null 2>&1 || (echo "Installing catch2..."; brew install catch2)
+	@if ! command -v brew &>/dev/null; then \
+		echo "Homebrew not found. Installing Homebrew..."; \
+		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+		eval "$$(/opt/homebrew/bin/brew shellenv)"; \
+	fi
+	@brew update
+	@brew ls --versions spdlog || (echo "Installing spdlog..."; brew install spdlog)
+	@brew ls --versions fmt || (echo "Installing fmt..."; brew install fmt)
+	@brew ls --versions sfml || (echo "Installing sfml..."; brew install sfml)
+	@brew ls --versions yaml-cpp || (echo "Installing yaml-cpp..."; brew install yaml-cpp)
+	@brew ls --versions catch2 || (echo "Installing catch2..."; brew install catch2)
 
 # Test build target
 $(TEST_TARGET): $(TEST_OBJ)
