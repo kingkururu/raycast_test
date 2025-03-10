@@ -132,7 +132,6 @@ namespace Constants {
             VIEW_RECT = { 0.0f, 0.0f, VIEW_SIZE_X, VIEW_SIZE_Y };
             FOV = config["world"]["FOV"].as<unsigned short>(); 
             RAYS_NUM = config["world"]["rays_num"].as<size_t>(); 
-            GROUND_COLOR = SpriteComponents::toSfColor(config["world"]["ground_color"].as<std::string>());
 
             // Load score settings
             INITIAL_SCORE = config["score"]["initial"].as<unsigned short>(); 
@@ -158,19 +157,7 @@ namespace Constants {
             SPRITE1_POSITION = {config["sprites"]["sprite1"]["position"]["x"].as<float>(),
                                 config["sprites"]["sprite1"]["position"]["y"].as<float>()};
             SPRITE1_SCALE = {config["sprites"]["sprite1"]["scale"]["x"].as<float>(),
-                            config["sprites"]["sprite1"]["scale"]["y"].as<float>()};
-
-            // Load enemy paths and settings
-            ENEMY_PATH = config["sprites"]["enemy"]["path"].as<std::string>();
-            ENEMY_SPEED = config["sprites"]["enemy"]["speed"].as<float>();
-            ENEMY_ACCELERATION = {config["sprites"]["enemy"]["acceleration"]["x"].as<float>(),
-                                config["sprites"]["enemy"]["acceleration"]["y"].as<float>()};         
-            ENEMY_INDEXMAX = config["sprites"]["enemy"]["index_max"].as<short>();
-            ENEMY_ANIMATIONROWS = config["sprites"]["enemy"]["animation_rows"].as<short>();
-            ENEMY_POSITION = {config["sprites"]["enemy"]["position"]["x"].as<float>(),
-                                config["sprites"]["enemy"]["position"]["y"].as<float>()};
-            ENEMY_SCALE = {config["sprites"]["enemy"]["scale"]["x"].as<float>(),
-                            config["sprites"]["enemy"]["scale"]["y"].as<float>()};                
+                            config["sprites"]["sprite1"]["scale"]["y"].as<float>()};        
             
             // Load bullet paths and settings
             BULLET_PATH = config["sprites"]["bullet"]["path"].as<std::string>();
@@ -237,27 +224,11 @@ namespace Constants {
                                 config["score_text"]["position"]["y"].as<float>()};
             SCORETEXT_COLOR = SpriteComponents::toSfColor(config["score_text"]["color"].as<std::string>());
 
-            ENDINGTEXT_SIZE = config["ending_text"]["size"].as<unsigned short>();
-            ENDINGTEXT_MESSAGE = config["ending_text"]["message"].as<std::string>();
-            ENDINGTEXT_POSITION = {config["ending_text"]["position"]["x"].as<float>(),
-                                config["ending_text"]["position"]["y"].as<float>()};
-            ENDINGTEXT_COLOR = SpriteComponents::toSfColor(config["ending_text"]["color"].as<std::string>());                    
-
             // Load music settings
             BACKGROUNDMUSIC_PATH = config["music"]["background_music"]["path"].as<std::string>();
             BACKGROUNDMUSIC_VOLUME = config["music"]["background_music"]["volume"].as<float>();
             BACKGROUNDMUSIC_LOOP = config["music"]["background_music"]["loop"].as<bool>();
             BACKGROUNDMUSIC_ENDINGVOLUME = config["music"]["background_music"]["ending_volume"].as<float>();
-            
-            // Load sound settings
-            PLAYERJUMPSOUND_PATH = config["sound"]["player_jump"]["path"].as<std::string>();
-            PLAYERJUMPSOUND_VOLUME = config["sound"]["player_jump"]["volume"].as<float>();
-
-            COINHITSOUND_PATH = config["sound"]["coin_hit"]["path"].as<std::string>();
-            COINHITSOUND_VOLUME = config["sound"]["coin_hit"]["volume"].as<float>();
-
-            BUTTONCLICKSOUND_PATH = config["sound"]["button_click"]["path"].as<std::string>();
-            BUTTONCLICKSOUND_VOLUME = config["sound"]["button_click"]["volume"].as<float>();
             
             log_info("Succesfuly read yaml file");
         } 
@@ -276,17 +247,11 @@ namespace Constants {
         if (!TILES_TEXTURE->loadFromFile(TILES_PATH)) log_warning("Failed to load tiles texture");
         if (!BULLET_TEXTURE->loadFromFile(BULLET_PATH)) log_warning("Failed to load bullet texture");
         if (!FRAME_TEXTURE->loadFromFile(FRAME_PATH)) log_warning("Failed to load frame texture");   
-        if (!ENEMY_TEXTURE->loadFromFile(ENEMY_PATH)) log_warning("Failed to load enemy texture");  
         if (!BACKGROUNDBIG_TEXTURE->loadFromFile(BACKGROUNDBIG_PATH)) log_warning("Failed to load background big texture");
         
         // music
         if (!BACKGROUNDMUSIC_MUSIC->openFromFile(BACKGROUNDMUSIC_PATH)) log_warning("Failed to load background music");
 
-        // sounds
-        if (!PLAYERJUMP_SOUNDBUFF->loadFromFile(PLAYERJUMPSOUND_PATH)) log_warning("Failed to load player jump sound");
-        if (!COINHIT_SOUNDBUFF->loadFromFile(COINHITSOUND_PATH)) log_warning("Failed to load coin hit sound");
-        if (!BUTTONCLICK_SOUNDBUFF->loadFromFile(BUTTONCLICKSOUND_PATH)) log_warning("Failed to load button click sound");
-        
         // font
         if (!TEXT_FONT->loadFromFile(TEXT_PATH)) log_warning("Failed to load text font");
     }
@@ -303,18 +268,6 @@ namespace Constants {
         // make bitmasks for tiles 
         for (const auto& rect : SPRITE1_ANIMATIONRECTS ) {
             SPRITE1_BITMASK.emplace_back(createBitmaskForBottom(SPRITE1_TEXTURE, rect, 0, 3));
-        }
-
-        ENEMY_ANIMATIONRECTS.reserve(ENEMY_INDEXMAX);
-        for (int row = 0; row < ENEMY_ANIMATIONROWS; ++row) {
-            for (int col = 0; col < ENEMY_INDEXMAX / ENEMY_ANIMATIONROWS; ++col) {
-                ENEMY_ANIMATIONRECTS.emplace_back(sf::IntRect{col * 32, row * 32, 32, 32});
-            }
-        }
-        ENEMY_BITMASK.reserve(ENEMY_INDEXMAX); 
-        // make bitmasks for tiles 
-        for (const auto& rect : ENEMY_ANIMATIONRECTS ) {
-            ENEMY_BITMASK.emplace_back(createBitmask(ENEMY_TEXTURE, rect));
         }
 
         BULLET_ANIMATIONRECTS.reserve(BULLET_INDEXMAX); 

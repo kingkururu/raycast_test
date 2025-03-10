@@ -63,16 +63,6 @@ class Scene {
   physics::Quadtree quadtree; 
 };
 
-// not in use
-class introScene : public virtual Scene{
- public:
-   using Scene::Scene; 
-  ~introScene() override = default; 
-    
- private:
-
-};
-
 // in use (the main scene in test game)
 class gamePlayScene : public virtual Scene{
  public:
@@ -117,8 +107,6 @@ class gamePlayScene : public virtual Scene{
   std::vector<std::unique_ptr<Bullet>> bullets; 
   std::unique_ptr<Sprite> frame; 
   std::unique_ptr<Sprite> backgroundBig; 
-
-  std::unique_ptr<Obstacle> enemy;
   
   std::array<std::shared_ptr<Tile>, Constants::TILES_NUMBER> tiles1;   
   std::unique_ptr<TileMap> tileMap1; 
@@ -129,32 +117,10 @@ class gamePlayScene : public virtual Scene{
 
   std::unique_ptr<MusicClass> backgroundMusic;
 
-  // std::unique_ptr<SoundClass> playerJumpSound; 
-  // std::unique_ptr<SoundClass> coinHitSound; 
-  // std::unique_ptr<SoundClass> playerDeadSound;
-  // std::unique_ptr<SoundClass> buttonClickSound; 
-
   std::unique_ptr<TextClass> introText; 
   std::unique_ptr<TextClass> scoreText; 
-  // std::unique_ptr<TextClass> endingText; 
 
   size_t score {};
 };
 
-// not using right now in test game
-class gamePlayScene2 : public virtual Scene{
-public:
-  using Scene::Scene; 
-  ~gamePlayScene2() override = default; 
- 
-  void createAssets() override; 
-
- private:
-  void handleInput() override; 
-
-  void draw() override; 
-  void update() override; 
-
-  //std::unique_ptr<Background> background; 
-};
 

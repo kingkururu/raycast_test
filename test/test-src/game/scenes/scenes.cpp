@@ -57,24 +57,13 @@ void Scene::moveViewPortWASD(){
 
 // Resets everything for scene to start again. The position, moveState, flagEvents, etc are all reset 
 void Scene::restartScene() {
-    // re-play background music
-
-    // set sprite movestates to true
-   
-    // re-set sprite and text positions 
-
-    // clear respawn time vectors or any other unecessary vectors 
-
-    // re-set flagEvents
+  
     sceneEvents.resetFlags(); 
 }
 
 // Handles events from flagEvents
 void Scene::handleGameFlags(){
-    // if flagEvents.gameEnd is true or some event ... do somthing 
-    if(FlagSystem::flagEvents.gameEnd){
-       
-    }
+    
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,12 +84,6 @@ void gamePlayScene::createAssets() {
         
         frame = std::make_unique<Sprite>(Constants::FRAME_POSITION, Constants::FRAME_SCALE, Constants::FRAME_TEXTURE); 
         backgroundBig = std::make_unique<Sprite>(Constants::BACKGROUNDBIG_POSITION, Constants::BACKGROUNDBIG_SCALE, Constants::BACKGROUNDBIG_TEXTURE); 
-        // button1 = std::make_unique<Button>(Constants::BUTTON1_POSITION, Constants::BUTTON1_SCALE, Constants::BUTTON1_TEXTURE, 
-        //                            Constants::BUTTON1_ANIMATIONRECTS, Constants::BUTTON1_INDEXMAX, utils::convertToWeakPtrVector(Constants::BUTTON1_BITMASK));
-        // button1->setRects(0); 
-        // button1->setVisibleState(false); 
-
-        enemy = std::make_unique<Obstacle>(Constants::ENEMY_POSITION, Constants::ENEMY_SCALE, Constants::ENEMY_TEXTURE, Constants::ENEMY_SPEED, Constants::ENEMY_ACCELERATION, Constants::ENEMY_ANIMATIONRECTS, Constants::ENEMY_INDEXMAX, utils::convertToWeakPtrVector(Constants::ENEMY_BITMASK)); 
          
         bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_STARTINGPOS, Constants::BULLET_STARTINGSCALE, Constants::BULLET_TEXTURE, Constants::BULLET_INITIALSPEED, Constants::BULLET_ACCELERATION, 
                                                    Constants::BULLET_ANIMATIONRECTS, Constants::BULLET_INDEXMAX,  utils::convertToWeakPtrVector(Constants::BULLET_BITMASK)));
@@ -120,17 +103,10 @@ void gamePlayScene::createAssets() {
         if(backgroundMusic) backgroundMusic->returnMusic().play(); 
         if(backgroundMusic) backgroundMusic->returnMusic().setLoop(Constants::BACKGROUNDMUSIC_LOOP);
 
-        // // Sound
-        // playerJumpSound = std::make_unique<SoundClass>(Constants::PLAYERJUMP_SOUNDBUFF, Constants::PLAYERJUMPSOUND_VOLUME); 
-        // coinHitSound = std::make_unique<SoundClass>(Constants::COINHIT_SOUNDBUFF, Constants::COINHITSOUND_VOLUME); 
-        // buttonClickSound = std::make_unique<SoundClass>(Constants::BUTTONCLICK_SOUNDBUFF, Constants::BUTTONCLICKSOUND_VOLUME);
-
         // Text
         introText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
         scoreText = std::make_unique<TextClass>(Constants::SCORETEXT_POSITION, Constants::SCORETEXT_SIZE, Constants::SCORETEXT_COLOR, Constants::TEXT_FONT, Constants::SCORETEXT_MESSAGE);
-        // endingText = std::make_unique<TextClass>(Constants::ENDINGTEXmake T_POSITION, Constants::ENDINGTEXT_SIZE, Constants::ENDINGTEXT_COLOR, Constants::TEXT_FONT, Constants::ENDINGTEXT_MESSAGE);
-        // endingText->setVisibleState(false);
-
+     
         insertItemsInQuadtree(); 
         setInitialTimes();
 
@@ -148,7 +124,6 @@ void gamePlayScene::setInitialTimes(){
 void gamePlayScene::insertItemsInQuadtree(){
     quadtree.insert(player);  
     quadtree.insert(bullets[bullets.size() - 1]); 
-    quadtree.insert(enemy); 
 }
 
 void gamePlayScene::respawnAssets(){
@@ -176,15 +151,11 @@ void gamePlayScene::handleInput() {
 }
 
 void gamePlayScene::handleMouseClick() {    
-    if (FlagSystem::flagEvents.mouseClicked) {
-       
-    }
+   
 }
 
 void gamePlayScene::handleSpaceKey() {
-    if (MetaComponents::spacePressedElapsedTime) {
-       
-    }
+   
 }
 
 void gamePlayScene::handleMovementKeys() {
@@ -198,8 +169,6 @@ void gamePlayScene::handleMovementKeys() {
     sf::FloatRect playerBounds = player->returnSpritesShape().getGlobalBounds();
     sf::Vector2f originalPlayerPos = player->getSpritePos();
 
-    // std::cout << "Tile X: " << tileX << ", Tile Y: " << tileY << ", inex: " << tileIndexInMap << "can walk: "<< canWalkOnTile<< std::endl;
-    
     if (FlagSystem::flagEvents.aPressed){ // turn left
         player->returnSpritesShape().rotate(-1.0f); // degrees
         float newAngle = player->returnSpritesShape().getRotation();
@@ -239,13 +208,10 @@ void gamePlayScene::handleMovementKeys() {
 
 // Keeps sprites inside screen bounds, checks for collisions, update scores, and sets flagEvents.gameEnd to true in an event of collision 
 void gamePlayScene::handleGameEvents() { 
-    // scoreText->getText().setPosition(MetaComponents::smallView.getCenter().x - 460, MetaComponents::smallView.getCenter().y - 270);
     scoreText->getText().setString("Score: " + std::to_string(score));
 
-    physics::calculateRayCast3d(player, tileMap1, rays, wallLine); // modifies the ray 
-   // physics::calculateRayCast3d(player, enemy, &quadtree); 
-    // physics::calculateRayCast3d(player, enemy); 
-
+    physics::calculateRayCast3d(player, tileMap1, rays, wallLine); 
+  
 } 
 
 void gamePlayScene::handleSceneFlags(){
@@ -270,13 +236,12 @@ void gamePlayScene::update() {
     }
 }
 
-void gamePlayScene::updateEntityStates(){ // manually change the sprite's state
+void gamePlayScene::updateEntityStates(){ 
    
 }
 
-void gamePlayScene::changeAnimation(){ // change animation for sprites. change animation for texts if necessary     if (button1 && button1->getVisibleState()) button1->changeAnimation(); 
+void gamePlayScene::changeAnimation(){ 
    for (const auto& bullet : bullets) if (bullet) bullet->changeAnimation();
-   if (enemy) enemy->changeAnimation(); 
 }
 
 void gamePlayScene::updatePlayerAndView() {
@@ -295,7 +260,7 @@ void gamePlayScene::updateDrawablesVisibility(){
 // Draws only the visible sprite and texts
 void gamePlayScene::draw() {
     try {
-        window.clear(sf::Color::Black); // set the base baskground color black
+        window.clear(sf::Color::Black); 
 
         drawInBigView();
         drawInSmallView();
@@ -316,20 +281,15 @@ void gamePlayScene::drawInBigView(){
 
     drawVisibleObject(bullets[0]); 
     drawVisibleObject(frame); 
-    drawVisibleObject(scoreText); 
     drawVisibleObject(introText);
-
-    // enemy->changePosition(enemy->getScreenPosition());
-    // enemy->updatePos(); 
-    // drawVisibleObject(enemy); 
 }
 
 void gamePlayScene::drawInSmallView(){
     window.setView(MetaComponents::smallView);
 
-    // temporary 
+    // background for small view
     sf::RectangleShape mainRect(sf::Vector2f(Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_Y));
-    mainRect.setFillColor(sf::Color::Black); // background for small view
+    mainRect.setFillColor(sf::Color::Black);
     mainRect.setPosition(0,0);
 
     window.draw(mainRect);
@@ -338,45 +298,4 @@ void gamePlayScene::drawInSmallView(){
     drawVisibleObject(player);
 
     window.draw(rays); 
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-// Game Scene #2 from down below 
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-void gamePlayScene2::createAssets() {
-    try {
-        
-    } 
-    catch (const std::exception& e) {
-        log_error("Exception in createAssets: " + std::string(e.what()));
-    }
-}
-
-void gamePlayScene2::handleInput() {
-    moveViewPortWASD(); // change position of the view port based on keyboard input flags
-}
-
-void gamePlayScene2::draw() {
-    try {
-        window.clear(); // clear elements from previous screen 
-        
-        window.display(); 
-    } 
-    catch (const std::exception& e) {
-        log_error("Exception in gamePlayScene2 draw: " + std::string(e.what()));
-    }
-}
-
-void gamePlayScene2::update() {
-    try {
-        handleInvisibleSprites(); // do a sprite pooling or actually delete all
-
-        window.setView(MetaComponents::smallView); 
-    }
-    catch (const std::exception& e) {
-        log_error("Exception in updateSprites: " + std::string(e.what()));
-    }
 }

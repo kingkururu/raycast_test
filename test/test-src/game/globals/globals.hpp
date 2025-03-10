@@ -77,7 +77,6 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline sf::FloatRect VIEW_RECT;
     inline unsigned short FOV;
     inline size_t RAYS_NUM;
-    inline sf::Color GROUND_COLOR;
 
     // Score settings
     inline unsigned short INITIAL_SCORE;
@@ -91,16 +90,6 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
     inline unsigned short PLAYER_Y_POS_BOUNDS_RUN;
 
-    // // Background settings
-    // inline float BACKGROUND_SPEED;
-    // inline std::filesystem::path BACKGROUNDSPRITE_PATH;
-    // inline std::filesystem::path BACKGROUNDSPRITE_PATH2;
-    // inline sf::Vector2f BACKGROUND_POSITION;
-    // inline sf::Vector2f BACKGROUND_SCALE;
-    // inline SpriteComponents::Direction BACKGROUND_MOVING_DIRECTION;
-    // inline std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE = std::make_shared<sf::Texture>();
-    // inline std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE2 = std::make_shared<sf::Texture>();
-  
     // player paths and settings
     inline short SPRITE1_INDEXMAX;
     inline short SPRITE1_ANIMATIONROWS;  
@@ -113,18 +102,6 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline std::shared_ptr<sf::Texture> SPRITE1_TEXTURE = std::make_shared<sf::Texture>();
     inline std::vector<sf::IntRect> SPRITE1_ANIMATIONRECTS;
     inline std::vector<std::shared_ptr<sf::Uint8[]>> SPRITE1_BITMASK;
-
-    // enemy paths and settings
-    inline short ENEMY_INDEXMAX;
-    inline short ENEMY_ANIMATIONROWS;  
-    inline std::filesystem::path ENEMY_PATH;
-    inline sf::Vector2f ENEMY_POSITION;
-    inline sf::Vector2f ENEMY_SCALE;
-    inline float ENEMY_SPEED;
-    inline sf::Vector2f ENEMY_ACCELERATION;
-    inline std::shared_ptr<sf::Texture> ENEMY_TEXTURE = std::make_shared<sf::Texture>();
-    inline std::vector<sf::IntRect> ENEMY_ANIMATIONRECTS;
-    inline std::vector<std::shared_ptr<sf::Uint8[]>> ENEMY_BITMASK;
  
     // Bullet paths and settings
     inline short BULLET_INDEXMAX;
@@ -185,30 +162,12 @@ namespace Constants { // not actually "constants" in terms of being fixed, but s
     inline sf::Vector2f SCORETEXT_POSITION;
     inline sf::Color SCORETEXT_COLOR;
 
-    inline unsigned short ENDINGTEXT_SIZE;
-    inline std::string ENDINGTEXT_MESSAGE;
-    inline sf::Vector2f ENDINGTEXT_POSITION;
-    inline sf::Color ENDINGTEXT_COLOR;
-
     // Music settings
     inline std::filesystem::path BACKGROUNDMUSIC_PATH;
     inline float BACKGROUNDMUSIC_VOLUME;
     inline std::unique_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC = std::make_unique<sf::Music>(); 
     inline bool BACKGROUNDMUSIC_LOOP;
     inline float BACKGROUNDMUSIC_ENDINGVOLUME;
-
-    // Sound settings
-    inline std::filesystem::path PLAYERJUMPSOUND_PATH;
-    inline float PLAYERJUMPSOUND_VOLUME;
-    inline std::shared_ptr<sf::SoundBuffer> PLAYERJUMP_SOUNDBUFF = std::make_shared<sf::SoundBuffer>();
-
-    inline std::filesystem::path COINHITSOUND_PATH;
-    inline float COINHITSOUND_VOLUME;
-    inline std::shared_ptr<sf::SoundBuffer> COINHIT_SOUNDBUFF = std::make_shared<sf::SoundBuffer>();
-
-    inline std::filesystem::path BUTTONCLICKSOUND_PATH;
-    inline float BUTTONCLICKSOUND_VOLUME;
-    inline std::shared_ptr<sf::SoundBuffer> BUTTONCLICK_SOUNDBUFF = std::make_shared<sf::SoundBuffer>();
 }
 
 // New namespace for flag events
@@ -277,5 +236,4 @@ namespace FlagSystem {
     };
 
     inline GameSceneEvents1 gameScene1Flags; // accesible from everywhere 
-    inline SceneEvents gameSceneNextFlags; // accecible from everywhere 
 }

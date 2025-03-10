@@ -89,36 +89,6 @@ class NonAnimated : public virtual Sprite { // add something inside later if nec
     ~NonAnimated() override{};
 };
 
-// background class deriving from sprites; the background doesn't "actually move with physics", but moves constantly to the left 
-class Background : public Sprite{
-public:
-   explicit Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture);
-    ~Background() override{};
-
-    // make background (can put any direction if only using primaryDirection, but need to put up/down in primary and right/left in secondary if using both)
-    void updateBackground(float speed, SpriteComponents::Direction primaryDirection, SpriteComponents::Direction secondaryDirection = SpriteComponents::Direction::NONE);  
-
-    sf::Sprite& returnSpritesShape2() { return *spriteCreated2; }
-    sf::Sprite& returnSpritesShape3() { return *spriteCreated3; }
-    sf::Sprite& returnSpritesShape4() { return *spriteCreated4; }
-
-    sf::FloatRect getViewBounds(sf::Sprite& spriteNum) const;
-
-    bool getBackgroundMoveState() const { return backgroundMoveState; } 
-    void setBackgroundMoveState(bool newState) { backgroundMoveState = newState; }
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override; 
-
-private:
-    // for right and left
-    std::unique_ptr<sf::Sprite> spriteCreated2;
-    // for up and down 
-    std::unique_ptr<sf::Sprite> spriteCreated3;
-    // for left-over blank space 
-    std::unique_ptr<sf::Sprite> spriteCreated4;
-
-    bool backgroundMoveState = true; 
-};
-
 // static class deriving from sprites; refers to non-moving sprites 
 class Static : public virtual Sprite{
 public:
@@ -152,31 +122,6 @@ protected:
     sf::Vector2f directionVector{}; 
     float speed {}; 
     sf::Vector2f acceleration{}; 
-};
-
-class Cloud : public NonStatic{
-public:
-    explicit Cloud(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, float speed, sf::Vector2f acceleration, std::weak_ptr<sf::Uint8[]>& bitMask)
-        : Sprite(position, scale, texture), NonStatic(position, scale, texture, speed, acceleration), bitMask(bitMask) {}
-    ~Cloud() override{}; 
-
-    std::shared_ptr<sf::Uint8[]> const getBitmask(size_t index) const override;     
-    bool getMoveState() const { return true; }
-     
-private: 
-    std::weak_ptr<sf::Uint8[]> bitMask;
-};
-
-class Coin : public NonStatic{
-public:
-    explicit Coin(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, float speed, sf::Vector2f acceleration, std::weak_ptr<sf::Uint8[]>& bitMask)
-        : Sprite(position, scale, texture), NonStatic(position, scale, texture, speed, acceleration), bitMask(bitMask) {}
-    ~Coin() override{}; 
-
-    std::shared_ptr<sf::Uint8[]> const getBitmask(size_t index) const override;     
-     
-private: 
-    std::weak_ptr<sf::Uint8[]> bitMask;
 };
 
 // player class deriving from NonStatic; refers to movable player 
@@ -251,22 +196,3 @@ public:
 
 private:
 };
-
-class Button : public Animated {
-public:
-    explicit Button(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, 
-                      const std::vector<sf::IntRect> animationRects, unsigned int indexMax, 
-                      const std::vector<std::weak_ptr<sf::Uint8[]>>& bitMask)
-        : Sprite(position, scale, texture),
-          Animated(position, scale, texture, animationRects, indexMax, bitMask)
-    {}
-    ~Button() override = default;
-
-    void setClickedBool(bool click) { clicked = click; }
-    bool getClickedBool() const { return clicked; }
-    void setPosition(sf::Vector2f newPos) { position = newPos; spriteCreated->setPosition(position); }
-    void updatePos() { spriteCreated->setPosition(position); }
-
-private:
-    bool clicked {}; 
-}; 

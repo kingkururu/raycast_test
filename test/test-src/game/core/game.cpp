@@ -4,9 +4,7 @@
 // GameManager constructor sets up the window, intitializes constant variables, calls the random function, and makes scenes 
 GameManager::GameManager()
     : mainWindow(Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_Y, Constants::GAME_TITLE, Constants::FRAME_LIMIT) {
-    introScreenScene = std::make_unique<introScene>(mainWindow.getWindow());
     gameScene = std::make_unique<gamePlayScene>(mainWindow.getWindow());
-    gameSceneNext = std::make_unique<gamePlayScene2>(mainWindow.getWindow()); 
 
     log_info("\tGame initialized");
 }
@@ -32,16 +30,12 @@ void GameManager::runGame() {
 
 void GameManager::runScenesFlags(){
     if(!FlagSystem::flagEvents.gameEnd){
-        if(FlagSystem::gameScene1Flags.sceneStart && !FlagSystem::gameSceneNextFlags.sceneStart) gameScene->runScene();
-
-        if(FlagSystem::gameSceneNextFlags.sceneStart && !FlagSystem::gameSceneNextFlags.sceneEnd) gameSceneNext->runScene();
+        gameScene->runScene();
     }
 }
 
 void GameManager::loadScenes(){
-    introScreenScene->createAssets(); 
     gameScene->createAssets();
-    gameSceneNext->createAssets(); 
 }
 
 // countTime counts global time and delta time for scenes to later use in runScene 
@@ -65,10 +59,7 @@ void GameManager::handleEventInput() {
         if (event.type == sf::Event::Resized){ 
             float aspectRatio = static_cast<float>(event.size.width) / event.size.height;
             sf::FloatRect visibleArea(0.0f, 0.0f, Constants::VIEW_SIZE_X, Constants::VIEW_SIZE_X / aspectRatio);
-            // MetaComponents::smallView = sf::View(visibleArea); 
-            // //keeping this makes the small view in proportion but be cut out sometimes if resized
-            // MetaComponents::smallView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
-
+           
             MetaComponents::bigView = sf::View(visibleArea); 
         }
         if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {

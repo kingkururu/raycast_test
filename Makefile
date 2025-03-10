@@ -78,12 +78,6 @@ TEST_TARGET := sfml_game_test
 all: $(TARGET)
 
 # Check and install required dependencies via Homebrew
-# install_deps:
-# 	@brew list spdlog >/dev/null 2>&1 || (echo "Installing spdlog..."; brew install spdlog)
-# 	@brew list fmt >/dev/null 2>&1 || (echo "Installing fmt..."; brew install fmt)
-# 	@brew list sfml >/dev/null 2>&1 || (echo "Installing sfml..."; brew install sfml)
-# 	@brew list yaml-cpp >/dev/null 2>&1 || (echo "Installing yaml-cpp..."; brew install yaml-cpp) 
-# 	@brew list catch2 >/dev/null 2>&1 || (echo "Installing catch2..."; brew install catch2)
 install_deps:
 	@if ! command -v brew &>/dev/null; then \
 		echo "Homebrew not found. Installing Homebrew..."; \
