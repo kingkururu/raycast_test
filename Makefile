@@ -11,11 +11,11 @@ CXXFLAGS := -std=c++17 -Wall \
 HOMEBREW_PREFIX ?= /opt/homebrew
 SPDLOG_INCLUDE ?= $(HOMEBREW_PREFIX)/opt/spdlog/include
 FMT_INCLUDE ?= $(HOMEBREW_PREFIX)/opt/fmt/include
-SFML_INCLUDE ?= $(HOMEBREW_PREFIX)/opt/sfml/include
+SFML_INCLUDE ?= $(HOMEBREW_PREFIX)/opt/sfml@2/include
 CATCH2_INCLUDE ?= $(HOMEBREW_PREFIX)/opt/catch2/include
 SPDLOG_LIB ?= $(HOMEBREW_PREFIX)/opt/spdlog/lib
 FMT_LIB ?= $(HOMEBREW_PREFIX)/opt/fmt/lib
-SFML_LIB ?= $(HOMEBREW_PREFIX)/opt/sfml/lib
+SFML_LIB ?= $(HOMEBREW_PREFIX)/opt/sfml@2/lib
 YAML_INCLUDE ?= $(HOMEBREW_PREFIX)/Cellar/yaml-cpp/0.8.0/include
 
 # Include paths for Homebrew libraries
