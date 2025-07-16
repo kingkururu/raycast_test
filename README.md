@@ -31,20 +31,20 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **Geometric Accuracy**: Trigonometric functions ensure proper perspective
 - **Boundary Detection**: Rays stop at wall intersections for accurate measurements
 - **View Frustum**: Field of view calculations for realistic 3D projection
-
-## 🚀 Building & Running
-
-### Prerequisites
-- **Compiler**: Requires clang++ (or g++) with C++17 support
-- **SFML**: Simple and Fast Multimedia Library for graphics and windowing
-- **Custom Game Framework**: Built on top of the SFML Game Framework
-
+  
 ## 🎮 Controls
 
 - **W**: Move forward
 - **S**: Move backward  
 - **A**: Rotate camera left / Strafe left
 - **D**: Rotate camera right / Strafe right
+- 
+## 🚀 Building & Running
+
+### Prerequisites
+- **Compiler**: Requires clang++ (or g++) with C++17 support
+- **SFML**: Simple and Fast Multimedia Library for graphics and windowing
+- **Custom Game Framework**: Built on top of the SFML Game Framework
 
 ## 📁 Project Structure
 
@@ -76,45 +76,6 @@ The raycasting system casts rays at regular intervals across the player's field 
 ├── Makefile                   # Build instructions
 └── README.md                  # Project documentation
 ```
-
-## 🎯 Key Learning Outcomes
-
-- **Raycasting Implementation**: Understanding 3D graphics simulation from 2D data
-- **Trigonometric Applications**: Using sine, cosine for geometric calculations
-- **Graphics Optimization**: Efficient rendering techniques for real-time performance
-- **Collision Detection**: Tile-based collision system integration
-- **Perspective Projection**: Creating depth illusion through distance-based rendering
-- **Game Loop Integration**: Smooth real-time rendering within game framework
-
-## 🔧 Technical Details
-
-### Raycasting Algorithm
-The demo implements a raycasting system that:
-1. Casts rays at regular intervals across the player's field of view
-2. Calculates intersection points with wall tiles
-3. Measures distances to determine wall heights
-4. Applies fisheye correction for geometric accuracy
-5. Renders vertical slices with distance-based shading
-
-### Performance Optimizations
-- **Boundary Optimization**: Rays terminate at first wall intersection
-- **Trigonometric Efficiency**: Optimized angle calculations
-- **Memory Management**: Efficient tile map data structures
-- **Render Culling**: Only visible portions are rendered
-
-## 🎨 Assets Credits
-
-- **Music**: [Best Game Console](https://pixabay.com/music/video-games-best-game-console-301284/) from Pixabay
-- **Graphics**: Custom artwork created using Canva and Canva AI
-- **Framework**: Built using the Custom SFML Game Framework
-
-## 🏆 Advanced Features
-
-- **Real-time Ray Visualization**: Mini-map shows active rays during casting
-- **Distance-Based Shading**: Walls darken with distance for depth perception
-- **Smooth Movement**: Collision detection allows fluid player movement
-- **Geometric Accuracy**: Proper trigonometric calculations for realistic perspective
-- **Optimized Rendering**: Efficient algorithms for real-time performance
 
 ## 🚀 Building & Running
 
@@ -164,3 +125,42 @@ The demo implements a raycasting system that:
    export PATH="/opt/homebrew/opt/sfml@2/bin:$PATH"
    export PATH="path to other libraries if any of them is missing)
    ```
+
+## 🔧 Technical Details
+
+## 🎯 Key Learning Outcomes
+
+- **Raycasting Implementation**: Understanding 3D graphics simulation from 2D data
+- **Trigonometric Applications**: Using sine, cosine for geometric calculations
+- **Graphics Optimization**: Efficient rendering techniques for real-time performance
+- **Collision Detection**: Tile-based collision system integration
+- **Perspective Projection**: Creating depth illusion through distance-based rendering
+- **Game Loop Integration**: Smooth real-time rendering within game framework
+  
+### Raycasting Algorithm
+The demo implements a raycasting system that:
+1. Casts rays at regular intervals across the player's field of view
+2. Calculates intersection points with wall tiles
+3. Measures distances to determine wall heights
+4. Applies fisheye correction for geometric accuracy
+5. Renders vertical slices with distance-based shading
+
+### Performance Optimizations
+- **Boundary Optimization**: Rays terminate at first wall intersection
+- **Trigonometric Efficiency**: Optimized angle calculations
+- **Memory Management**: Efficient tile map data structures
+- **Render Culling**: Only visible portions are rendered
+
+## 🏆 Advanced Features
+
+- **Real-time Ray Visualization**: Mini-map shows active rays during casting
+- **Distance-Based Shading**: Walls darken with distance for depth perception
+- **Smooth Movement**: Collision detection allows fluid player movement
+- **Geometric Accuracy**: Proper trigonometric calculations for realistic perspective
+- **Optimized Rendering**: Efficient algorithms for real-time performance
+
+## 🎨 Assets Credits
+
+- **Music**: [Best Game Console](https://pixabay.com/music/video-games-best-game-console-301284/) from Pixabay
+- **Graphics**: Custom artwork created using Canva and Canva AI
+- **Framework**: Built using the Custom SFML Game Framework
