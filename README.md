@@ -39,8 +39,6 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **A**: Rotate camera left / Strafe left
 - **D**: Rotate camera right / Strafe right
   
-## 🚀 Building & Running
-
 ## 📁 Project Structure
 
 ```
@@ -75,6 +73,8 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **Compiler**: Requires clang++ (or g++) with C++17 support
 - **SFML**: Simple and Fast Multimedia Library for graphics and windowing
 - **Custom Game Framework**: Built on top of the SFML Game Framework
+
+## 🚀 Building & Running
 
 ### Installation
 
