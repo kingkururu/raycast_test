@@ -2,6 +2,8 @@
 
 A simulated 3D graphics demo built with C++ and SFML, showcasing raycasting techniques for creating pseudo-3D environments from 2D map data. This demo explores the fundamental graphics rendering approach used in classic games like Doom and Wolfenstein 3D.
 
+<img width="585" height="431" alt="Image" src="https://github.com/user-attachments/assets/f9b11a2f-ff7e-4837-8a57-85018e1382d5" />
+
 ## 🎯 Features
 
 - **Raycasting Engine**: Renders 3D-looking environments from 2D tile maps
