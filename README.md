@@ -7,13 +7,12 @@ A simulated 3D graphics demo built with C++ and SFML, showcasing raycasting tech
 ## 🎯 Features
 
 - **Raycasting Engine**: Renders 3D-looking environments from 2D tile maps
-- **Player Movement**: WASD controls for forward/backward and strafing
+- **Player Movement**: W and S keys for forward/backward
 - **Camera Rotation**: A and D keys for left/right view rotation
 - **Distance-Based Rendering**: Walls appear taller when closer, shorter when farther
 - **Fisheye Correction**: Geometric accuracy using trigonometric functions
 - **Collision Detection**: Player restricted to walkable black tiles
 - **Mini-Map Visualization**: Real-time representation of player position and rays
-- **Tile-Based World**: Green tiles for walkable areas, walls block movement
 - **Performance Optimized**: Efficient ray casting with boundary collision
 
 ## 🛠️ Technical Implementation
@@ -38,8 +37,8 @@ The raycasting system casts rays at regular intervals across the player's field 
 
 - **W**: Move forward
 - **S**: Move backward  
-- **A**: Rotate camera left / Strafe left
-- **D**: Rotate camera right / Strafe right
+- **A**: Rotate camera left / turn player left
+- **D**: Rotate camera right / turn player right
   
 ## 📁 Project Structure
 
