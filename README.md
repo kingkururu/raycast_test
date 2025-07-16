@@ -38,7 +38,7 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **S**: Move backward  
 - **A**: Rotate camera left / Strafe left
 - **D**: Rotate camera right / Strafe right
-- 
+  
 ## 🚀 Building & Running
 
 ### Prerequisites
@@ -76,9 +76,6 @@ The raycasting system casts rays at regular intervals across the player's field 
 ├── Makefile                   # Build instructions
 └── README.md                  # Project documentation
 ```
-
-## 🚀 Building & Running
-
 ### Prerequisites
 - **Compiler**: Requires clang++ (or g++) with C++17 support
 - **SFML**: Simple and Fast Multimedia Library for graphics and windowing
@@ -163,4 +160,4 @@ The demo implements a raycasting system that:
 
 - **Music**: [Best Game Console](https://pixabay.com/music/video-games-best-game-console-301284/) from Pixabay
 - **Graphics**: Custom artwork created using Canva and Canva AI
-- **Framework**: Built using the Custom SFML Game Framework
+- **Framework**: Built using the Custom SFML Game Framework https://github.com/kingkururu/sfml_game_template/edit/main/README.md
