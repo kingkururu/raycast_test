@@ -1,4 +1,4 @@
-# Raycasting Demo Piece 🎯
+# Raycasting Demo Piece
 
 A simulated 3D graphics demo built with C++ and SFML, showcasing raycasting techniques for creating pseudo-3D environments from 2D map data. This demo explores the fundamental graphics rendering approach used in classic games like Doom and Wolfenstein 3D.
 
@@ -40,11 +40,6 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **D**: Rotate camera right / Strafe right
   
 ## 🚀 Building & Running
-
-### Prerequisites
-- **Compiler**: Requires clang++ (or g++) with C++17 support
-- **SFML**: Simple and Fast Multimedia Library for graphics and windowing
-- **Custom Game Framework**: Built on top of the SFML Game Framework
 
 ## 📁 Project Structure
 
@@ -122,8 +117,6 @@ The raycasting system casts rays at regular intervals across the player's field 
    export PATH="/opt/homebrew/opt/sfml@2/bin:$PATH"
    export PATH="path to other libraries if any of them is missing)
    ```
-
-## 🔧 Technical Details
 
 ## 🎯 Key Learning Outcomes
 
