@@ -4,7 +4,7 @@ A simulated 3D graphics demo built with C++ and SFML, showcasing raycasting tech
 
 <img width="585" height="431" alt="Image" src="https://github.com/user-attachments/assets/f9b11a2f-ff7e-4837-8a57-85018e1382d5" />
 
-## 🎯 Features
+## Features
 
 - **Raycasting Engine**: Renders 3D-looking environments from 2D tile maps
 - **Player Movement**: W and S keys for forward/backward
@@ -15,7 +15,7 @@ A simulated 3D graphics demo built with C++ and SFML, showcasing raycasting tech
 - **Mini-Map Visualization**: Real-time representation of player position and rays
 - **Performance Optimized**: Efficient ray casting with boundary collision
 
-## 🛠️ Technical Implementation
+## Technical Implementation
 
 ### Core Raycasting Algorithm
 The raycasting system casts rays at regular intervals across the player's field of view to calculate distances to wall surfaces. Each ray's intersection with walls determines the height of vertical slices rendered on screen, creating a 3D perspective effect.
@@ -33,14 +33,14 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **Boundary Detection**: Rays stop at wall intersections for accurate measurements
 - **View Frustum**: Field of view calculations for realistic 3D projection
   
-## 🎮 Controls
+## Controls
 
 - **W**: Move forward
 - **S**: Move backward  
 - **A**: Rotate camera left / turn player left
 - **D**: Rotate camera right / turn player right
   
-## 📁 Project Structure
+## Project Structure
 
 ```
 /raycast_test
@@ -74,7 +74,7 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **SFML**: Simple and Fast Multimedia Library for graphics and windowing
 - **Custom Game Framework**: Built on top of the SFML Game Framework
 
-## 🚀 Building & Running
+## Building & Running
 
 ### Installation
 
@@ -118,7 +118,7 @@ The raycasting system casts rays at regular intervals across the player's field 
    export PATH="path to other libraries if any of them is missing)
    ```
 
-## 🎯 Key Learning Outcomes
+## Key Learning Outcomes
 
 - **Raycasting Implementation**: Understanding 3D graphics simulation from 2D data
 - **Trigonometric Applications**: Using sine, cosine for geometric calculations
@@ -141,7 +141,7 @@ The demo implements a raycasting system that:
 - **Memory Management**: Efficient tile map data structures
 - **Render Culling**: Only visible portions are rendered
 
-## 🏆 Advanced Features
+## Advanced Features
 
 - **Real-time Ray Visualization**: Mini-map shows active rays during casting
 - **Distance-Based Shading**: Walls darken with distance for depth perception
