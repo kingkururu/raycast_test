@@ -149,7 +149,7 @@ The demo implements a raycasting system that:
 - **Geometric Accuracy**: Proper trigonometric calculations for realistic perspective
 - **Optimized Rendering**: Efficient algorithms for real-time performance
 
-## 🎨 Assets Credits
+## Assets Credits
 
 - **Music**: [Best Game Console](https://pixabay.com/music/video-games-best-game-console-301284/) from Pixabay
 - **Graphics**: Custom artwork created using Canva and Canva AI
