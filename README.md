@@ -125,6 +125,12 @@ The demo implements a raycasting system that:
 - **Geometric Accuracy**: Proper trigonometric calculations for realistic perspective
 - **Optimized Rendering**: Efficient algorithms for real-time performance
 
+## Tools Used
+- **SFML**: https://github.com/SFML/SFML 
+- **Yaml-cpp**: https://github.com/jbeder/yaml-cpp
+- **Spdlog**: https://github.com/gabime/spdlog 
+- **FMT**: https://github.com/fmtlib/fmt 
+
 ## Assets Credits
 
 - **Music**: [Best Game Console](https://pixabay.com/music/video-games-best-game-console-301284/) from Pixabay
