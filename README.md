@@ -33,19 +33,10 @@ The raycasting system casts rays at regular intervals across the player's field 
 - **Boundary Detection**: Rays stop at wall intersections for accurate measurements
 - **View Frustum**: Field of view calculations for realistic 3D projection
   
-## Controls
-
-- **W**: Move forward
-- **S**: Move backward  
-- **A**: Rotate camera left / turn player left
-- **D**: Rotate camera right / turn player right
-  
 ## Project Structure
 
 ```
 /raycast_test
-│
-├── .vscode/                  # VSCode settings and configurations
 │
 ├── src/                      # Source files
 │   ├── main.cpp              # Main entry point of the game
@@ -112,15 +103,6 @@ The raycasting system casts rays at regular intervals across the player's field 
    export PATH="path to other libraries if any of them is missing)
    ```
 
-## Key Learning Outcomes
-
-- **Raycasting Implementation**: Understanding 3D graphics simulation from 2D data
-- **Trigonometric Applications**: Using sine, cosine for geometric calculations
-- **Graphics Optimization**: Efficient rendering techniques for real-time performance
-- **Collision Detection**: Tile-based collision system integration
-- **Perspective Projection**: Creating depth illusion through distance-based rendering
-- **Game Loop Integration**: Smooth real-time rendering within game framework
-  
 ### Raycasting Algorithm
 The demo implements a raycasting system that:
 1. Casts rays at regular intervals across the player's field of view
