@@ -92,7 +92,7 @@ The raycasting system casts rays at regular intervals across the player's field 
 
 3. **Run the Demo**:
    ```bash
-   make run
+   make test
    ```
 
 4. **Clean the Build**:
