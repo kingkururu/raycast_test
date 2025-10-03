@@ -84,18 +84,12 @@ The raycasting system casts rays at regular intervals across the player's field 
    cd raycast_test (location will be different)
    ```
 
-2. **Build the Project**:
-   ```bash
-   make
-   ```
-   This will compile the raycasting demo along with the game framework.
-
-3. **Run the Demo**:
+2. **Build and Run the Demo**:
    ```bash
    make test
    ```
 
-4. **Clean the Build**:
+3. **Clean the Build**:
    ```bash
    make clean
    ```
